@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="400.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.FXMLDocumentController">
+   <children>
+      <Text layoutX="239.0" layoutY="113.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome" />
+      <Label layoutX="124.0" layoutY="160.0" text="Username" />
+      <Label layoutX="124.0" layoutY="213.0" text="Password" />
+      <Button fx:id="loginButton" layoutX="293.0" layoutY="282.0" mnemonicParsing="false" onAction="#handleButtonAction" text="Login" />
+      <TextField fx:id="userNameBox" layoutX="190.0" layoutY="156.0" promptText="Username" />
+      <TextField fx:id="passWordBox" layoutX="190.0" layoutY="209.0" promptText="password" />
+      <Label fx:id="invalidLabel" layoutX="189.0" layoutY="243.0" prefHeight="17.0" prefWidth="149.0" textFill="RED" />
+      <Button id="newUserID" alignment="CENTER" contentDisplay="CENTER" layoutX="376.0" layoutY="354.0" mnemonicParsing="false" onAction="#handleNewUser" text="Register new user" />
+   </children>
+</AnchorPane>
