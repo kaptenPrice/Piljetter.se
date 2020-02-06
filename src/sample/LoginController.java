@@ -15,25 +15,24 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 public class LoginController {
-
+    private DBUtil data = new DBUtil();
+    private Connection loginConnection;
+    private Statement loginstatment;
 
     @FXML
-    private TextField userNameBox;
-
-    @FXML
-    private TextField passWordBox;
-
+    private TextField userNameBox,passWordBox;
     @FXML
     private Label invalidLabel;
 
 
     @FXML
-    private void handleButtonAction(ActionEvent event) throws IOException {
+    private void loginInButtonAction(ActionEvent event) throws IOException {
         System.out.println("HandlebuttonAction klickad ");
         Parent homePageRoot = FXMLLoader.load(getClass().getResource("NewUser.fxml"));
         Scene homePageScene = new Scene(homePageRoot);
         Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-       if (isValidCredentials(userNameBox.getText(),passWordBox.getText())){appStage.hide();
+       if (isValidCredentials()){
+           appStage.hide();
         appStage.setScene(homePageScene);
         appStage.show();}
        else {
@@ -48,7 +47,7 @@ public class LoginController {
         Parent homePageRoot = FXMLLoader.load(getClass().getResource("NewUser.fxml"));
         Scene homePageScene = new Scene(homePageRoot);
         Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        appStage.hide();
+        appStage. hide();
         appStage.setScene(homePageScene);
         appStage.show();
     }
@@ -59,43 +58,39 @@ public class LoginController {
 
     }
 
-    private boolean isValidCredentials(String userId, String password) {
-        String un="postgres";
-        String pw="1234";
-        String CONNECTION="jdbc:postgresql://localhost:5432/pilijetter";
+    private boolean isValidCredentials() {
         boolean letIn = false;
-        Statement stmt;
-
+//        System.out.println("SELECT * FROM customer WHERE name=" + "'" + userNameBox.getText() + "'"
+  //              + " AND customerid= " + "'" + passWordBox.getText() + "'");
         try {
-           Connection conn = DriverManager.getConnection(CONNECTION,un,pw);
-            conn.setAutoCommit(false);
-            stmt = conn.createStatement();
+            loginConnection = DriverManager.getConnection(data.getDATABASECONNECTION(),data.getDATABASEINLOGG(),data.getDATABASEPASSWORD());
+            loginConnection.setAutoCommit(false);
             System.out.println("Opened db successfully");
+            loginstatment = loginConnection.createStatement();
+            String login ="SELECT * FROM cd.customer WHERE customerid=" + "'" + userNameBox.getText() + "'"
+                    + " AND password= " + "'" + passWordBox.getText() + "'";
+            ResultSet loginresualt = loginstatment.executeQuery(login);
 
-            PreparedStatement st = conn.prepareStatement("SELECT * FROM customer WHERE customerid=" + "'" + userNameBox.getText() + "'"
-                            + " AND password= " + "'" + passWordBox.getText() + "'");
-
-            ResultSet result= st.executeQuery();
-
-            while (result.next()) {
-                if (result.getString("customerid") != null && result.getString("password") != null) {
-                    String username = result.getString("customerid");
+            while (loginresualt.next()) {
+                if (loginresualt.getString("customerid") != null && loginresualt.getString("password") != null) {
+                    String username = loginresualt.getString("customerid");
                     System.out.println("customerid = " + username);
-                    String passWord = result.getString("password");
+                    String passWord = loginresualt.getString("password");
                     System.out.println("password = " + passWord);
+
                     letIn = true;
                 }
             }
-            st.close();
-            stmt.close();
-            conn.close();
+            loginresualt.close();
+            loginstatment.close();
+            loginConnection.close();
             System.out.println("closed conn.");
         } catch (Exception e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
-
         }
         System.out.println("Operation done succesfully");
         return letIn;
     }
+
 
 }
