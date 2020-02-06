@@ -2,9 +2,7 @@ package sample;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
+import java.sql.*;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -35,7 +33,7 @@ public class LoginController {
         Parent homePageRoot = FXMLLoader.load(getClass().getResource("NewUser.fxml"));
         Scene homePageScene = new Scene(homePageRoot);
         Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-       if (isValidCredentials()){appStage.hide();
+       if (isValidCredentials(userNameBox.getText(),passWordBox.getText())){appStage.hide();
         appStage.setScene(homePageScene);
         appStage.show();}
        else {
@@ -61,46 +59,43 @@ public class LoginController {
 
     }
 
-    private boolean isValidCredentials() {
+    private boolean isValidCredentials(String userId, String password) {
         String un="postgres";
         String pw="1234";
+        String CONNECTION="jdbc:postgresql://localhost:5432/pilijetter";
         boolean letIn = false;
-        System.out.println("SELECT * FROM customer WHERE name=" + "'" + userNameBox.getText() + "'"
-                + " AND customerid= " + "'" + passWordBox.getText() + "'");
-        Connection c = null;
-        java.sql.Statement stmt = null;
+        Statement stmt;
 
         try {
-            c = DriverManager.getConnection("jdbc:postgresql://localhost:5432/pilijetter",un,pw);
-
-            c.setAutoCommit(false);
+           Connection conn = DriverManager.getConnection(CONNECTION,un,pw);
+            conn.setAutoCommit(false);
+            stmt = conn.createStatement();
             System.out.println("Opened db successfully");
-            stmt = c.createStatement();
 
-            ResultSet rs = stmt.executeQuery("SELECT * FROM customer WHERE name=" + "'" + userNameBox.getText() + "'"
-                    + " AND customerid= " + "'" + passWordBox.getText() + "'");
+            PreparedStatement st = conn.prepareStatement("SELECT * FROM customer WHERE customerid=" + "'" + userNameBox.getText() + "'"
+                            + " AND password= " + "'" + passWordBox.getText() + "'");
 
-            while (rs.next()) {
-                if (rs.getString("username") != null && rs.getString("password") != null) {
-                    String username = rs.getString("username");
-                    System.out.println("username = " + username);
-                    String passWord = rs.getString("password");
+            ResultSet result= st.executeQuery();
+
+            while (result.next()) {
+                if (result.getString("customerid") != null && result.getString("password") != null) {
+                    String username = result.getString("customerid");
+                    System.out.println("customerid = " + username);
+                    String passWord = result.getString("password");
                     System.out.println("password = " + passWord);
-
                     letIn = true;
                 }
             }
-            rs.close();
+            st.close();
             stmt.close();
-            c.close();
+            conn.close();
             System.out.println("closed conn.");
         } catch (Exception e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
-            System.exit(0);
+
         }
         System.out.println("Operation done succesfully");
         return letIn;
     }
-
 
 }

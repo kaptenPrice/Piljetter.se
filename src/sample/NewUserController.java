@@ -15,13 +15,11 @@ import java.sql.*;
 
 public class NewUserController {
     @FXML
-    private TextField newUserNameBox;
+    private static TextField newUserNameBox;
+    private static TextField newPasswordBox;
 
     @FXML
-    private TextField newPasswordBox;
-
-    @FXML
-    private Label busyCredentials;
+    private static Label busyCredentials;
 
 
     @FXML
@@ -48,7 +46,7 @@ public class NewUserController {
         String CONNECTION = "jdbc:postgresql://localhost:5432/pilijetter";
         try {
             Connection connection = DriverManager.getConnection(CONNECTION, un, pw);
-            PreparedStatement st = connection.prepareStatement("INSERT INTO customer (name, customerid)" + "VALUES (?, ?)");
+            PreparedStatement st = connection.prepareStatement("INSERT INTO customer (customerid,password)" + "VALUES (?, ?)");
             st.setString(1, userId);
             st.setString(2, password);
             return st.executeUpdate() > 0;
