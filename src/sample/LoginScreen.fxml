@@ -11,7 +11,7 @@
       <Text layoutX="239.0" layoutY="113.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome" />
       <Label layoutX="124.0" layoutY="160.0" text="Username" />
       <Label layoutX="124.0" layoutY="213.0" text="Password" />
-      <Button fx:id="loginButton" layoutX="293.0" layoutY="282.0" mnemonicParsing="false" onAction="#handleButtonAction" text="Login" />
+      <Button fx:id="loginButton" layoutX="293.0" layoutY="282.0" mnemonicParsing="false" onAction="#loginInButtonAction" text="Login" />
       <TextField fx:id="userNameBox" layoutX="190.0" layoutY="156.0" promptText="Username" />
       <TextField fx:id="passWordBox" layoutX="190.0" layoutY="209.0" promptText="password" />
       <Label fx:id="invalidLabel" layoutX="189.0" layoutY="243.0" prefHeight="17.0" prefWidth="149.0" textFill="RED" />

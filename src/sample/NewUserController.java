@@ -14,15 +14,13 @@ import java.sql.*;
 
 
 public class NewUserController {
-    @FXML
-    private TextField newUserNameBox;
+    private DBUtil data = new DBUtil();
 
     @FXML
-    private TextField newPasswordBox;
+    private TextField newUserNameBox,newPasswordBox;
 
     @FXML
     private Label busyCredentials;
-
 
     @FXML
     public void createNewAccount(ActionEvent event) throws IOException, SQLException {
@@ -30,7 +28,7 @@ public class NewUserController {
         Parent homePageRoot = FXMLLoader.load(getClass().getResource("LoginScreen.fxml"));
         Scene homePageScene = new Scene(homePageRoot);
         Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        if ((isNewUserUnique(newUserNameBox.getText(),newPasswordBox.getText()))) {
+        if ((isNewUserUnique())) {
             appStage.hide();
             appStage.setScene(homePageScene);
             appStage.show();
@@ -42,20 +40,18 @@ public class NewUserController {
 
     }
 
-    private boolean isNewUserUnique( String userId, String password ) throws SQLException {
-        String un = "postgres";
-        String pw = "1234";
-        String CONNECTION = "jdbc:postgresql://localhost:5432/pilijetter";
+    private boolean isNewUserUnique() throws SQLException {
         try {
-            Connection connection = DriverManager.getConnection(CONNECTION, un, pw);
-            PreparedStatement st = connection.prepareStatement("INSERT INTO customer (name, customerid)" + "VALUES (?, ?)");
-            st.setString(1, userId);
-            st.setString(2, password);
+            Connection connection = DriverManager.getConnection(data.getDATABASECONNECTION(),data.getDATABASEINLOGG(),data.getDATABASEPASSWORD());
+            PreparedStatement st = connection.prepareStatement("INSERT INTO cd.customer (customerid,password,pesetas)" + "VALUES (?, ?,100)");
+            st.setString(1, newUserNameBox.getText());
+            st.setString(2, newPasswordBox.getText());
             return st.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();
+            return false;
         }
-        return false;
+
     }
 }
 
