@@ -28,7 +28,7 @@ public class LoginController {
     @FXML
     private void loginInButtonAction(ActionEvent event) throws IOException {
         System.out.println("HandlebuttonAction klickad ");
-        Parent homePageRoot = FXMLLoader.load(getClass().getResource("NewUser.fxml"));
+        Parent homePageRoot = FXMLLoader.load(getClass().getResource("MysiteCustomer.fxml"));
         Scene homePageScene = new Scene(homePageRoot);
         Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
        if (isValidCredentials()){
