@@ -30,24 +30,24 @@
       </Label>
       <TextField fx:id="searcTextField" layoutX="102.0" layoutY="84.0" promptText="Type in artist, date, country, city..." />
       <TextField fx:id="showConsertTextField" alignment="TOP_LEFT" layoutX="11.0" layoutY="127.0" prefHeight="280.0" prefWidth="501.0" promptText="Top 20 most popular artist" />
-      <Button fx:id="buyPesetas100" layoutX="513.0" layoutY="45.0" mnemonicParsing="false" text="100 ps">
+      <Button fx:id="buyPesetas100" layoutX="513.0" layoutY="45.0" mnemonicParsing="false" onAction="#buy100Pesetas" text="100 ps">
          <font>
             <Font size="10.0" />
          </font>
       </Button>
-      <Button fx:id="buyPesetas200" layoutX="566.0" layoutY="45.0" mnemonicParsing="false" text="200 ps">
+      <Button fx:id="buyPesetas200" layoutX="566.0" layoutY="45.0" mnemonicParsing="false" onAction="#buy200Pesetas" text="200 ps">
          <font>
             <Font size="10.0" />
          </font>
       </Button>
-      <Button fx:id="buyPesetas300" layoutX="620.0" layoutY="45.0" mnemonicParsing="false" text="300 ps">
+      <Button fx:id="buyPesetas300" layoutX="620.0" layoutY="45.0" mnemonicParsing="false" onAction="#buy300Pesetas" text="300 ps">
          <font>
             <Font size="10.0" />
          </font>
       </Button>
       <Label fx:id="pesetasAmount" layoutX="612.0" layoutY="77.0" prefHeight="17.0" prefWidth="88.0" wrapText="true" />
       <Label layoutX="513.0" layoutY="77.0" text="Existing amount:" />
-      <Button fx:id="searchButton" layoutX="262.0" layoutY="85.0" mnemonicParsing="false" text="Search" textFill="#2508f9">
+      <Button fx:id="searchButton" layoutX="262.0" layoutY="85.0" mnemonicParsing="false" onAction="#search" text="Search" textFill="#2508f9">
          <font>
             <Font size="10.0" />
          </font>
