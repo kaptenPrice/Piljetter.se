@@ -89,6 +89,7 @@ public class LoginController {
                     passwordForInlog = loginresualt.getString("password");
                     System.out.println("password = " + passwordForInlog);
                     letIn = true;
+
                     customerInlog();
                 }
             }
@@ -103,7 +104,7 @@ public class LoginController {
         return letIn;
     }
 
-    private void customerInlog() throws IOException {
+    private void customerInlog() throws IOException, SQLException {
         Parent inloggcus = FXMLLoader.load(getClass().getResource("InloggedCus.fxml"));
         Stage inloggStage = new Stage();
         inloggStage.setScene(new Scene(inloggcus));

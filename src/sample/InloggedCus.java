@@ -12,6 +12,7 @@ public class InloggedCus {
     private Statement loggedin;
     private LoginController loginController;
 
+    private static InloggedCus currentCustomer;
     private int test;
 
     @FXML
@@ -98,4 +99,16 @@ public class InloggedCus {
 
     public void search(ActionEvent actionEvent) {
     }
+
+    public void startBookings() throws SQLException {
+        pesetasAmount.setText(String.valueOf(calculatePesetas()));
+    }
+
+    public static InloggedCus getCurrentCustomer() throws SQLException {
+        if (currentCustomer==null) {
+            currentCustomer = new InloggedCus();
+        }
+        return currentCustomer;
+    }
+
 }
