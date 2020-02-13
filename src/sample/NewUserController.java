@@ -37,7 +37,6 @@ public class NewUserController {
             newPasswordBox.clear();
             busyCredentials.setText("Busy name, try with something else");
         }
-
     }
 
     private boolean isNewUserUnique() throws SQLException {
