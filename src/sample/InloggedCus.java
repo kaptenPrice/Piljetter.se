@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public class InloggedCus {
     private Statement loggedin;
     private LoginController loginController;
-
+    private static String konsertID;
     private static InloggedCus currentCustomer;
     private int test;
 
@@ -47,9 +47,9 @@ public class InloggedCus {
 
     @FXML
     void buyTickets(ActionEvent event) throws SQLException {
-        loggedIn = loginController.getLoginController().getLoginConnection().createStatement();
+        loggedin = loginController.getLoginController().getLoginConnection().createStatement();
         String login ="SELECT konsertid FROM cd.konsert WHERE konsertid=" + "'" + choosenConsertIdTextField.getText() + "'";
-        ResultSet resultSet= loggedIn.executeQuery(login);
+        ResultSet resultSet= loggedin.executeQuery(login);
         String resultat = "false";
         while (resultSet.next()) {
             if (resultSet.getString("konsertid").equals(choosenConsertIdTextField.getText())) {
@@ -62,22 +62,22 @@ public class InloggedCus {
     }
 
     public void buy100Pesetas(ActionEvent actionEvent) throws SQLException {
-        loggedIn = loginController.getLoginController().getLoginConnection().createStatement();
+        loggedin = loginController.getLoginController().getLoginConnection().createStatement();
         String login ="UPDATE cd.customer SET pesetas =(pesetas +100) WHERE customerid=" + "'" + loginController.getLoginController().getUserNameForInlog() + "'"
                 + " AND password= " + "'" + loginController.getLoginController().getPasswordForInlog() + "'";
-        loggedIn.executeUpdate(String.format(login));
-        loggedIn.close();
+        loggedin.executeUpdate(String.format(login));
+        loggedin.close();
         // loginController.getLoginController().getLoginConnection().close();
         pesetasAmount.setText(String.valueOf(calculatePesetas()));
 
     }
 
     public void buy200Pesetas(ActionEvent actionEvent) throws SQLException {
-        loggedIn = loginController.getLoginController().getLoginConnection().createStatement();
+        loggedin = loginController.getLoginController().getLoginConnection().createStatement();
         String login ="UPDATE cd.customer SET pesetas =(pesetas +200) WHERE customerid=" + "'" + loginController.getLoginController().getUserNameForInlog() + "'"
                 + " AND password= " + "'" + loginController.getLoginController().getPasswordForInlog() + "'";
-        loggedIn.executeUpdate(String.format(login));
-        loggedIn.close();
+        loggedin.executeUpdate(String.format(login));
+        loggedin.close();
         // loginController.getLoginController().getLoginConnection().close();
         pesetasAmount.setText(String.valueOf(calculatePesetas()));
 
@@ -85,30 +85,30 @@ public class InloggedCus {
 
     public void buy300Pesetas(ActionEvent actionEvent) throws SQLException {
 
-        loggedIn = loginController.getLoginController().getLoginConnection().createStatement();
+        loggedin = loginController.getLoginController().getLoginConnection().createStatement();
         String login ="UPDATE cd.customer SET pesetas =(pesetas +300) WHERE customerid=" + "'" + loginController.getLoginController().getUserNameForInlog() + "'"
                 + " AND password= " + "'" + loginController.getLoginController().getPasswordForInlog() + "'";
-        loggedIn.executeUpdate(String.format(login));
-        loggedIn.close();
+        loggedin.executeUpdate(String.format(login));
+        loggedin.close();
        // loginController.getLoginController().getLoginConnection().close();
         pesetasAmount.setText(String.valueOf(calculatePesetas()));
     }
     protected int calculatePesetas() throws SQLException {
 
-        loggedIn = loginController.getLoginController().getLoginConnection().createStatement();
+        loggedin = loginController.getLoginController().getLoginConnection().createStatement();
         String login ="SELECT pesetas FROM cd.customer WHERE customerid=" + "'" + loginController.getLoginController().getUserNameForInlog() + "'"
                 + " AND password= " + "'" + loginController.getLoginController().getPasswordForInlog() + "'";
-        ResultSet getPesetas = loggedIn.executeQuery(login);
+        ResultSet getPesetas = loggedin.executeQuery(login);
         while (getPesetas.next()) {
             test = getPesetas.getInt("pesetas");
         }
        return test;
     }
     private void updateConserts() throws SQLException {
-        loggedIn = loginController.getLoginController().getLoginConnection().createStatement();
+        loggedin = loginController.getLoginController().getLoginConnection().createStatement();
         String login ="SELECT * FROM cd.konsert";
         ArrayList <Object> resalt = new ArrayList<>();
-        ResultSet getConsert = loggedIn.executeQuery(login);
+        ResultSet getConsert = loggedin.executeQuery(login);
         while (getConsert.next()) {
        resalt.add(getConsert.getString("konsertdate"));
        resalt.add(getConsert.getString("artist"));
