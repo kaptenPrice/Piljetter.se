@@ -9,17 +9,17 @@
 
 <AnchorPane maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.InloggedCus">
    <children>
-      <Label layoutX="14.0" layoutY="14.0" text="My bookings" textFill="#3a00d8">
+      <Label layoutX="274.0" layoutY="14.0" text="CustomerSite" textFill="#3a00d8">
          <font>
             <Font size="16.0" />
          </font>
       </Label>
-      <Label layoutX="511.0" layoutY="14.0" prefHeight="25.0" prefWidth="92.0" text="Buy pesetas" textFill="#3a00d8">
+      <Label layoutX="511.0" layoutY="82.0" prefHeight="25.0" prefWidth="92.0" text="Buy pesetas" textFill="#3a00d8">
          <font>
             <Font size="16.0" />
          </font>
       </Label>
-      <Label fx:id="freeCoupons" layoutX="515.0" layoutY="101.0" prefHeight="30.0" prefWidth="139.0" textFill="#f05704">
+      <Label fx:id="freeCoupons" layoutX="515.0" layoutY="169.0" prefHeight="30.0" prefWidth="139.0" textFill="#f05704">
          <font>
             <Font size="20.0" />
          </font>
@@ -29,32 +29,44 @@
             <Font size="16.0" />
          </font>
       </Label>
-      <TextField fx:id="searcTextField" layoutX="102.0" layoutY="84.0" promptText="Type in artist, date, country, city..." />
-      <Button fx:id="buyPesetas100" layoutX="513.0" layoutY="45.0" mnemonicParsing="false" onAction="#buy100Pesetas" text="100 ps">
+      <TextField fx:id="searcTextField" layoutX="33.0" layoutY="80.0" prefHeight="30.0" prefWidth="230.0" promptText="Type in artist, date, country, city..." />
+      <Button fx:id="buyPesetas100" layoutX="513.0" layoutY="113.0" mnemonicParsing="false" onAction="#buy100Pesetas" text="100 ps">
          <font>
             <Font size="10.0" />
          </font>
       </Button>
-      <Button fx:id="buyPesetas200" layoutX="566.0" layoutY="45.0" mnemonicParsing="false" onAction="#buy200Pesetas" text="200 ps">
+      <Button fx:id="buyPesetas200" layoutX="566.0" layoutY="113.0" mnemonicParsing="false" onAction="#buy200Pesetas" text="200 ps">
          <font>
             <Font size="10.0" />
          </font>
       </Button>
-      <Button fx:id="buyPesetas300" layoutX="620.0" layoutY="45.0" mnemonicParsing="false" onAction="#buy300Pesetas" text="300 ps">
+      <Button fx:id="buyPesetas300" layoutX="620.0" layoutY="113.0" mnemonicParsing="false" onAction="#buy300Pesetas" text="300 ps">
          <font>
             <Font size="10.0" />
          </font>
       </Button>
-      <Label fx:id="pesetasAmount" layoutX="612.0" layoutY="77.0" prefHeight="17.0" prefWidth="88.0" wrapText="true" />
-      <Label layoutX="513.0" layoutY="77.0" text="Existing amount:" />
-      <Button fx:id="searchButton" layoutX="262.0" layoutY="85.0" mnemonicParsing="false" onAction="#search" text="Search" textFill="#2508f9">
+      <Label fx:id="pesetasAmount" layoutX="612.0" layoutY="145.0" prefHeight="17.0" prefWidth="88.0" wrapText="true" />
+      <Label layoutX="513.0" layoutY="145.0" text="Existing amount:" />
+      <Button fx:id="searchButton" layoutX="269.0" layoutY="85.0" mnemonicParsing="false" onAction="#search" prefHeight="23.0" prefWidth="54.0" text="Find" textFill="#2508f9">
          <font>
             <Font size="10.0" />
          </font>
       </Button>
-      <TextField fx:id="choosenConsertIdTextField" alignment="TOP_LEFT" layoutX="11.0" layoutY="429.0" prefHeight="52.0" prefWidth="243.0" promptText="Type in consert id" />
-      <Button fx:id="buyTicketButton" layoutX="284.0" layoutY="442.0" mnemonicParsing="false" onAction="#buyTickets" prefHeight="25.0" prefWidth="58.0" text="Buy" />
-      <Button fx:id="updateButton" layoutX="559.0" layoutY="208.0" mnemonicParsing="false" onAction="#startBookings" text="update" />
+      <TextField fx:id="choosenConsertIdTextField" alignment="TOP_LEFT" layoutX="31.0" layoutY="459.0" prefHeight="52.0" prefWidth="243.0" promptText="Type in consert id" />
+      <Button fx:id="buyTicketButton" layoutX="304.0" layoutY="472.0" mnemonicParsing="false" onAction="#buyTickets" prefHeight="25.0" prefWidth="58.0" text="Buy" textFill="#031eec" />
+      <Button fx:id="updateButton" layoutX="385.0" layoutY="14.0" mnemonicParsing="false" onAction="#startBookings" text="Update" />
       <TextArea fx:id="textArea" layoutX="33.0" layoutY="124.0" prefHeight="258.0" prefWidth="453.0" />
+      <TextField fx:id="dateFrom" layoutX="34.0" layoutY="392.0" prefHeight="25.0" prefWidth="77.0" promptText="2020-01-01" />
+      <TextField fx:id="dateTo" layoutX="135.0" layoutY="392.0" prefHeight="25.0" prefWidth="77.0" promptText="2030-01-01" />
+      <Label layoutX="117.0" layoutY="397.0" text="To" textFill="#3a00d8">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Label>
+      <Button fx:id="searchByDateButton" layoutX="234.0" layoutY="393.0" mnemonicParsing="false" onAction="#searchByDate" prefHeight="23.0" prefWidth="36.0" text="Go" textFill="#2508f9">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>
