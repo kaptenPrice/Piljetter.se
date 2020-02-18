@@ -127,5 +127,6 @@ public class LoginController {
     }
 
 
-
+    public void loginAdmin(ActionEvent event) {
+    }
 }

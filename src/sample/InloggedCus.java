@@ -36,10 +36,10 @@ public class InloggedCus {
     void buyTickets(ActionEvent event) {}
 
     public void buy100Pesetas(ActionEvent actionEvent) throws SQLException {
-        loggedin = loginController.getLoginController().getLoginConnection().createStatement();
-        String login = "UPDATE cd.customer SET pesetas =(pesetas +100) WHERE customerid=" + "'" + loginController.getLoginController().getUserNameForInlog() + "'"
-                + " AND password= " + "'" + loginController.getLoginController().getPasswordForInlog() + "'";
-        loggedin.executeUpdate(String.format(login));
+        loggedin = LoginController.getLoginController().getLoginConnection().createStatement();
+        String login = "UPDATE cd.customer SET pesetas =(pesetas +100) WHERE customerid=" + "'" + LoginController.getLoginController().getUserNameForInlog() + "'"
+                + " AND password= " + "'" + LoginController.getLoginController().getPasswordForInlog() + "'";
+        loggedin.executeUpdate(login);
         loggedin.close();
         // loginController.getLoginController().getLoginConnection().close();
         pesetasAmount.setText(String.valueOf(calculatePesetas()));
@@ -138,7 +138,7 @@ public class InloggedCus {
 
     private void uppdateConsert() throws SQLException {//TODO set WEIGHT on date ASC
         textArea.clear();
-        loggedin = loginController.getLoginController().getLoginConnection().createStatement();
+        loggedin = LoginController.getLoginController().getLoginConnection().createStatement();
         String query = ("SELECT * FROM cd.konsert");
         ArrayList<Object> result = new ArrayList<>();
         ResultSet getConsertList = loggedin.executeQuery(query);
