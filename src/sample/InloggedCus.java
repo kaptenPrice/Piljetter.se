@@ -58,7 +58,7 @@ public class InloggedCus {
         choosenConsertIdTextField.setText(resultat);
     }
 
-    public void buy100Pesetas(ActionEvent actionEvent) throws SQLException {
+    public void buy100Pesetas() throws SQLException {
         loggedin = LoginController.getLoginController().getLoginConnection().createStatement();
         String login ="UPDATE cd.customer SET pesetas =(pesetas +100) WHERE customerid=" + "'" + LoginController.getLoginController().getUserNameForInlog() + "'"
                 + " AND password= " + "'" + LoginController.getLoginController().getPasswordForInlog() + "'";
@@ -69,7 +69,7 @@ public class InloggedCus {
 
     }
 
-    public void buy200Pesetas(ActionEvent actionEvent) throws SQLException {
+    public void buy200Pesetas() throws SQLException {
         loggedin = LoginController.getLoginController().getLoginConnection().createStatement();
         String login ="UPDATE cd.customer SET pesetas =(pesetas +200) WHERE customerid=" + "'" + LoginController.getLoginController().getUserNameForInlog() + "'"
                 + " AND password= " + "'" + LoginController.getLoginController().getPasswordForInlog() + "'";
@@ -80,7 +80,7 @@ public class InloggedCus {
 
     }
 
-    public void buy300Pesetas(ActionEvent actionEvent) throws SQLException {
+    public void buy300Pesetas() throws SQLException {
 
         loggedin = LoginController.getLoginController().getLoginConnection().createStatement();
         String login ="UPDATE cd.customer SET pesetas =(pesetas +300) WHERE customerid=" + "'" + LoginController.getLoginController().getUserNameForInlog() + "'"
@@ -128,7 +128,7 @@ public class InloggedCus {
         }
     }
 
-    public void search(ActionEvent actionEvent) throws SQLException { //TODO set WEIGHT on date ASC
+    public void search() throws SQLException { //TODO set WEIGHT on date ASC
         textArea.clear();
         loggedin = LoginController.getLoginController().getLoginConnection().createStatement();
         String query = ("SELECT artist, scene, konsertdate, city, country, konsertid FROM cd.konsert" +
@@ -153,7 +153,7 @@ public class InloggedCus {
         }
     }
 
-    public void startBookings(ActionEvent actionEvent) throws SQLException {
+    public void startBookings() throws SQLException {
         textArea.clear();
         choosenConsertIdTextField.clear();
         pesetasAmount.setText(String.valueOf(calculatePesetas()));

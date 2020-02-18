@@ -5,22 +5,21 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane prefHeight="545.0" prefWidth="642.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.AdminMainFXML">
+<fx:root prefHeight="545.0" prefWidth="642.0" type="AnchorPane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.AdminMainFXML">
    <children>
       <TextField fx:id="artistsValues" layoutX="16.0" layoutY="99.0" prefHeight="33.0" prefWidth="291.0" promptText="Type in artistname and popularity" />
-      <Button fx:id="bookConcertButton" layoutX="219.0" layoutY="202.0" mnemonicParsing="false" text="Make konsert" />
-      <Button fx:id="cancelConsertButton" layoutX="216.0" layoutY="258.0" mnemonicParsing="false" onAction="#cancelConsert" text="Cancel consert" />
-      <TextField fx:id="consertValues" layoutX="16.0" layoutY="144.0" prefHeight="47.0" prefWidth="291.0" promptText="Artist,venue, cost, consertdate, consertid" />
+      <Button fx:id="bookConcertButton" layoutX="219.0" layoutY="202.0" mnemonicParsing="false" onAction="#makeConcert" text="Create consert" />
+      <Button fx:id="cancelConcertButton" layoutX="216.0" layoutY="258.0" mnemonicParsing="false" onAction="#cancelConcert" text="Cancel consert" />
+      <TextField fx:id="concertValues" layoutX="16.0" layoutY="144.0" prefHeight="47.0" prefWidth="291.0" promptText="Artist,venue, cost, consertdate, consertid" />
       <TextField fx:id="placesValues" layoutX="16.0" layoutY="38.0" prefHeight="47.0" prefWidth="291.0" promptText="Venue, city,Contrycode,renomme, amount of tickets" />
-      <TextField fx:id="cancelConsertValue" layoutX="16.0" layoutY="258.0" prefHeight="25.0" prefWidth="194.0" promptText="Cancel consert" />
+      <TextField fx:id="cancelConcertValue" layoutX="16.0" layoutY="258.0" prefHeight="25.0" prefWidth="194.0" promptText="Cancel concert" />
       <Button fx:id="amountOfSoldticketsButton" layoutX="539.0" layoutY="126.0" mnemonicParsing="false" onAction="#amountOfSoldTickets" text="Create report" />
       <Button fx:id="mostBookedArtistsButton" layoutX="539.0" layoutY="86.0" mnemonicParsing="false" onAction="#mostBookedArtists" text="Create report" />
       <Label layoutX="398.0" layoutY="90.0" text="Most booked artists " />
       <Label layoutX="398.0" layoutY="130.0" text="Amount of sold tickets" />
       <Label layoutX="453.0" layoutY="38.0" text="Rapports" />
-      <Label fx:id="profitabilityButton" layoutX="398.0" layoutY="169.0" onDragDetected="#profitability" text="Profitability" />
-      <Button layoutX="539.0" layoutY="165.0" mnemonicParsing="false" text="Create report" />
+      <Label layoutX="398.0" layoutY="169.0" text="Profitability" />
+      <Button fx:id="profitabilityButton" layoutX="539.0" layoutY="165.0" mnemonicParsing="false" onAction="#profitability" text="Create report" />
       <TextField alignment="TOP_LEFT" layoutX="355.0" layoutY="215.0" prefHeight="316.0" prefWidth="272.0" promptText="Your report will appear here" />
    </children>
-</AnchorPane>
+</fx:root>
