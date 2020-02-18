@@ -11,14 +11,11 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class InloggedCus {
-    private Statement loggedIn;
+    private Statement loggedin;
     private LoginController loginController;
-    private static String konsertID;
+
     private static InloggedCus currentCustomer;
     private int test;
-
-    @FXML
-    private TextArea textArea;
 
     @FXML
     private Label freeCoupons;
@@ -30,14 +27,12 @@ public class InloggedCus {
     private TextField searcTextField;
 
     @FXML
-    private Button buyPesetas100;
+    private TextField showConsertTextField;
 
     @FXML
-    private Button buyPesetas200;
-
+    private TextField dateFrom, dateTo;
     @FXML
-    private Button buyPesetas300;
-
+    private TextArea textArea;
     @FXML
     private Label pesetasAmount;
 
@@ -129,8 +124,55 @@ public class InloggedCus {
         }
     }
 
+    public void searchByDate(ActionEvent event) throws SQLException {
+        textArea.clear();
+        loggedin= LoginController.getLoginController().getLoginConnection().createStatement();
 
-    public void search(ActionEvent actionEvent) throws SQLException {
+        String query=  ("SELECT artist, scene, cost, konsertid, konsertdate, city, country FROM cd.konsert JOIN cd.places ON konsert.scene=places.venue " +
+                "WHERE konsertdate BETWEEN '"+dateFrom.getText()+"' AND'"+dateTo.getText()
+                +"' ORDER BY konsertdate ASC"); //deklarerar SQL koden.
+        ResultSet resultSet=loggedin.executeQuery(query); //svar från db hamnar i resultset
+        System.out.println(query);
+        ArrayList<Object> searchByDateList= new ArrayList<>(); //stoppar in alla resultat från db i listan
+        while (resultSet.next()){
+            searchByDateList.add(resultSet.getString("artist"));
+            searchByDateList.add(resultSet.getString("scene"));
+            searchByDateList.add(resultSet.getString("konsertdate"));
+            searchByDateList.add(resultSet.getString("konsertid"));
+            searchByDateList.add(resultSet.getString("country"));
+            searchByDateList.add(resultSet.getString("city"));
+        }
+        for (int i = 0; i <searchByDateList.size() ; i++) {
+            if (i % 6 == 0){
+                textArea.setText(textArea.getText() + "\n");
+            }
+            textArea.setText(textArea.getText() + searchByDateList.get(i) + "  "); //Adderar radbyte mellan raderna och space mellan columnerna i raden
+        }
+    }
+
+    public void search(ActionEvent actionEvent) throws SQLException { //TODO set WEIGHT on date ASC
+        textArea.clear();
+        loggedin = LoginController.getLoginController().getLoginConnection().createStatement();
+        String query = ("SELECT artist, scene, konsertdate, city, country, konsertid FROM cd.konsert" +
+                "        JOIN cd.places ON konsert.scene = places.venue " +
+                "WHERE to_tsvector(artist || ' ' || scene || ' ' || konsertdate || ' ' || city || ' ' || country || ' ' || konsertid)" +
+                "@@ to_tsquery('" + searcTextField.getText() + ",')");
+        ArrayList<Object> searchResultList = new ArrayList<>();
+        ResultSet resultSet = loggedin.executeQuery(query);
+        while (resultSet.next()) {
+            searchResultList.add(resultSet.getString("artist"));
+            searchResultList.add(resultSet.getString("scene"));
+            searchResultList.add(resultSet.getString("konsertdate"));
+            searchResultList.add(resultSet.getString("konsertid"));
+            searchResultList.add(resultSet.getString("country"));
+            searchResultList.add(resultSet.getString("city"));
+        }
+        for (int i = 0; i < searchResultList.size(); i++) {
+            if (i % 6 == 0) {
+                textArea.setText(textArea.getText() + "\n");
+            }
+            textArea.setText(textArea.getText() + searchResultList.get(i)+"  ");
+        }
     }
 
     public void startBookings(ActionEvent actionEvent) throws SQLException {
