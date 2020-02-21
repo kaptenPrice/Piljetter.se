@@ -54,7 +54,7 @@
       </Button>
       <TextField fx:id="choosenConsertIdTextField" alignment="TOP_LEFT" layoutX="20.0" layoutY="491.0" prefHeight="52.0" prefWidth="243.0" promptText="Type in consert id" />
       <Button fx:id="buyTicketButton" layoutX="277.0" layoutY="517.0" mnemonicParsing="false" onAction="#buyTickets" prefHeight="25.0" prefWidth="58.0" text="Buy" />
-      <Button fx:id="updateButton" contentDisplay="CENTER" layoutX="14.0" layoutY="17.0" mnemonicParsing="false" onAction="#startBookings" text="Click here to refresh" textFill="#f95909" />
+      <Button fx:id="updateButton" contentDisplay="CENTER" layoutX="503.0" layoutY="243.0" mnemonicParsing="false" onAction="#startBookings" text="Click here to refresh" textFill="#f95909" />
       <TextArea fx:id="textArea" layoutX="20.0" layoutY="130.0" prefHeight="285.0" prefWidth="432.0" promptText="textArea" />
       <TextField fx:id="dateFrom" layoutX="20.0" layoutY="434.0" prefHeight="25.0" prefWidth="81.0" promptText="2020-01-01" />
       <TextField fx:id="dateTo" layoutX="133.0" layoutY="434.0" prefHeight="25.0" prefWidth="81.0" promptText="2020-12-31" />

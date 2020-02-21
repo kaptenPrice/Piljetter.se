@@ -9,12 +9,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+
 import java.io.IOException;
 import java.sql.*;
 
 
 public class NewUserController {
-    private DBUtil data = new DBUtil();
+    private DBUtil dbUtil = new DBUtil();
 
     @FXML
     private TextField newUserNameBox,newPasswordBox;
@@ -41,7 +42,7 @@ public class NewUserController {
 
     private boolean isNewUserUnique() throws SQLException {
         try {
-            Connection connection = DriverManager.getConnection(data.getDATABASECONNECTION(),data.getDATABASEINLOGG(),data.getDATABASEPASSWORD());
+            Connection connection = DriverManager.getConnection(dbUtil.getDATABASECONNECTION(), dbUtil.getDATABASEINLOGG(), dbUtil.getDATABASEPASSWORD());
             PreparedStatement st = connection.prepareStatement("INSERT INTO cd.customer (customerid,password,pesetas)" + "VALUES (?, ?,100)");
             st.setString(1, newUserNameBox.getText());
             st.setString(2, newPasswordBox.getText());

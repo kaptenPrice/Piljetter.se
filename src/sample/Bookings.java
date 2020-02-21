@@ -44,8 +44,8 @@ public class Bookings {
         public void handle(MouseEvent e) {
             ticketArea.clear();
             try {
-                loggedIn = loginController.getLoginController().getLoginConnection().createStatement();
-                String recipt = "SELECT ticketid,boughttype FROM cd.bookings WHERE customerid ='"+ loginController.getLoginController().getUserNameForInlog() +"'";
+                loggedIn = LoginController.getLoginController().getLoginConnection().createStatement();
+                String recipt = "SELECT ticketid,boughttype FROM cd.bookings WHERE customerid ='"+ LoginController.getLoginController().getUserNameForInlog() +"'";
                 ArrayList <String> printRecipt = new ArrayList<>();
                 ResultSet getTickets = loggedIn.executeQuery(recipt);
                 while (getTickets.next()) {
@@ -81,11 +81,11 @@ public class Bookings {
         public void handle(MouseEvent e) {
             try {
                 if (getCouponsForLabel()>=1) {
-                    loggedIn = loginController.getLoginController().getLoginConnection().createStatement();
+                    loggedIn = LoginController.getLoginController().getLoginConnection().createStatement();
                     String booking = "INSERT INTO cd.bookings (customerid,ticketid,boughttype)" +
-                            "VALUES((SELECT customerid FROM cd.customer WHERE customerid =" + "'" + loginController.getLoginController().getUserNameForInlog() + "'" + ")," +
+                            "VALUES((SELECT customerid FROM cd.customer WHERE customerid =" + "'" + LoginController.getLoginController().getUserNameForInlog() + "'" + ")," +
                             "(SELECT ticketid FROM cd.tickets WHERE ticketid = " + "'" + chooseTicket.getText() + "'" + "),'coupon')";
-                    loggedIn.executeUpdate(String.format(booking));
+                    loggedIn.executeUpdate(booking);
                     loggedIn.close();
                     changeBoughtTicketStatus(chooseTicket.getText());
                     changeCouponAmountAfterBuy();
@@ -104,14 +104,14 @@ public class Bookings {
         @Override
         public void handle(MouseEvent e) {
             try {
-                customerPesetas = inloggedCus.getCurrentCustomer().calculatePesetas();
+                customerPesetas = InloggedCus.getCurrentCustomer().calculatePesetas();
                 int pricecost = getTicketCost();
                 if (customerPesetas >= pricecost) {
-                    loggedIn = loginController.getLoginController().getLoginConnection().createStatement();
+                    loggedIn = LoginController.getLoginController().getLoginConnection().createStatement();
                     String booking = "INSERT INTO cd.bookings (customerid,ticketid,boughttype)" +
                             "VALUES((SELECT customerid FROM cd.customer WHERE customerid =" + "'" + loginController.getLoginController().getUserNameForInlog() + "'" + ")," +
                             "(SELECT ticketid FROM cd.tickets WHERE ticketid = " + "'" + chooseTicket.getText() + "'" + "),'pesetas')";
-                    loggedIn.executeUpdate(String.format(booking));
+                    loggedIn.executeUpdate(booking);
                     loggedIn.close();
                     changeBoughtTicketStatus(chooseTicket.getText());
                     updatePesetas(customerPesetas,pricecost);
@@ -223,7 +223,7 @@ public class Bookings {
              pesetasLabel.setText("pesetas:" +getPesetasForLabel());
          }
          private void changeBoughtTicketStatus(String ticketid) throws SQLException {
-             loggedIn = loginController.getLoginController().getLoginConnection().createStatement();
+             loggedIn = LoginController.getLoginController().getLoginConnection().createStatement();
              String statusTicket = "UPDATE cd.tickets SET boughtstatus = 0 Where ticketid ='"+ticketid +"'";
              loggedIn.executeUpdate(statusTicket);
              loggedIn.close();

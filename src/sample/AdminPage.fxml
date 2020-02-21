@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="652.0" prefWidth="642.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.AdminMainController">
+   <children>
+      <TextField fx:id="artistName" layoutX="15.0" layoutY="272.0" prefHeight="25.0" prefWidth="183.0" promptText="Artist or th band name" />
+      <Button fx:id="bookConcertButton" layoutX="19.0" layoutY="544.0" mnemonicParsing="false" onAction="#makeConcert" text="Create consert" />
+      <Button fx:id="cancelConcertButton" layoutX="217.0" layoutY="594.0" mnemonicParsing="false" onAction="#cancelConcert" text="Cancel consert" />
+      <TextField fx:id="artistNameValue" alignment="TOP_LEFT" layoutX="15.0" layoutY="388.0" prefHeight="25.0" prefWidth="120.0" promptText="Artist/band name" />
+      <TextField fx:id="cancelConcertValue" layoutX="16.0" layoutY="594.0" prefHeight="25.0" prefWidth="194.0" promptText="Cancel concert" />
+      <Button fx:id="amountOfSoldticketsButton" layoutX="539.0" layoutY="126.0" mnemonicParsing="false" onAction="#amountOfSoldTickets" text="Create report" />
+      <Button fx:id="mostBookedArtistsButton" layoutX="539.0" layoutY="86.0" mnemonicParsing="false" onAction="#mostBookedArtists" text="Create report" />
+      <Label layoutX="398.0" layoutY="90.0" text="Most booked artists " />
+      <Label layoutX="398.0" layoutY="130.0" text="Amount of sold tickets" />
+      <Label layoutX="451.0" layoutY="5.0" text="Rapports">
+         <font>
+            <Font size="20.0" />
+         </font></Label>
+      <Label layoutX="398.0" layoutY="169.0" text="Profitability" />
+      <Button fx:id="profitabilityButton" layoutX="539.0" layoutY="165.0" mnemonicParsing="false" onAction="#profitability" text="Create report" />
+      <TextField alignment="TOP_LEFT" layoutX="322.0" layoutY="215.0" prefHeight="355.0" prefWidth="305.0" promptText="Your report will appear here" />
+      <Label layoutX="16.0" layoutY="250.0" prefHeight="17.0" prefWidth="183.0" text="Artist/band, Popularity(integer)" />
+      <Label layoutX="16.0" layoutY="369.0" prefHeight="17.0" prefWidth="291.0" text="Artist/band, Cost(int),concertdate, concertID" />
+      <TextField fx:id="venueValue" layoutX="14.0" layoutY="32.0" prefHeight="25.0" prefWidth="87.0" promptText="Ullevi" />
+      <TextField fx:id="cityValue" layoutX="14.0" layoutY="65.0" prefHeight="25.0" prefWidth="87.0" promptText="Göteborg" />
+      <TextField fx:id="countryCodeValue" layoutX="14.0" layoutY="95.0" prefHeight="25.0" prefWidth="87.0" promptText="SE" />
+      <TextField fx:id="renommeValue" layoutX="14.0" layoutY="127.0" prefHeight="25.0" prefWidth="87.0" promptText="22" />
+      <TextField fx:id="amountValue" layoutX="14.0" layoutY="157.0" prefHeight="25.0" prefWidth="87.0" promptText="100000" />
+      <Label layoutX="16.0" layoutY="11.0" prefHeight="17.0" prefWidth="291.0" text="Venue, City, Countrycode, Renomme, amountOfTickets" />
+      <TextField fx:id="artistPop" layoutX="16.0" layoutY="302.0" prefHeight="25.0" prefWidth="183.0" promptText="popularity" />
+      <TextField fx:id="costValue" alignment="TOP_LEFT" layoutX="16.0" layoutY="450.0" prefHeight="25.0" prefWidth="120.0" promptText="10000" />
+      <TextField fx:id="concertDateValue" alignment="TOP_LEFT" layoutX="16.0" layoutY="481.0" prefHeight="25.0" prefWidth="120.0" promptText="2020-01-01" />
+      <TextField fx:id="concertIdValue" alignment="TOP_LEFT" layoutX="16.0" layoutY="511.0" prefHeight="25.0" prefWidth="120.0" promptText="ABCDEFFGHT" />
+      <Button fx:id="bookConcertButton1" layoutX="14.0" layoutY="190.0" mnemonicParsing="false" onAction="#makeConcert" text="Create venue" />
+      <Button fx:id="bookConcertButton11" layoutX="17.0" layoutY="333.0" mnemonicParsing="false" onAction="#makeConcert" text="Create artist" />
+      <TextField fx:id="sceneValue" alignment="TOP_LEFT" layoutX="16.0" layoutY="419.0" prefHeight="25.0" prefWidth="120.0" promptText="Ullevi" />
+
+   </children>
+</AnchorPane>

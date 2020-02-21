@@ -6,6 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -15,38 +16,19 @@ public class InloggedCus {
     private static String konsertID;
     private static InloggedCus currentCustomer;
     private int test;
-
     @FXML
-    private Label freeCoupons;
+    private Label MyBookingsLabel,pesetasAmount,freeCoupons;
     @FXML
-    private Label MyBookingsLabel;
-    @FXML
-    private TextField searcTextField;
-
-    @FXML
-    private TextField showConsertTextField;
-
-    @FXML
-    private TextField dateFrom, dateTo;
+    private TextField dateFrom, dateTo, searcTextField,choosenConsertIdTextField;
     @FXML
     private TextArea textArea;
-    @FXML
-    private Label pesetasAmount;
 
-    @FXML
-    private Button searchButton;
-
-    @FXML
-    private TextField choosenConsertIdTextField;
-
-    @FXML
-    private Button buyTicketButton;
 
     @FXML
     void buyTickets(ActionEvent event) throws SQLException {
         loggedin = LoginController.getLoginController().getLoginConnection().createStatement();
-        String login ="SELECT konsertid FROM cd.konsert WHERE konsertid=" + "'" + choosenConsertIdTextField.getText() + "'";
-        ResultSet resultSet= loggedin.executeQuery(login);
+        String login = "SELECT konsertid FROM cd.konsert WHERE konsertid=" + "'" + choosenConsertIdTextField.getText() + "'";
+        ResultSet resultSet = loggedin.executeQuery(login);
         String resultat = "false";
         while (resultSet.next()) {
             if (resultSet.getString("konsertid").equals(choosenConsertIdTextField.getText())) {
@@ -60,7 +42,7 @@ public class InloggedCus {
 
     public void buy100Pesetas() throws SQLException {
         loggedin = LoginController.getLoginController().getLoginConnection().createStatement();
-        String login ="UPDATE cd.customer SET pesetas =(pesetas +100) WHERE customerid=" + "'" + LoginController.getLoginController().getUserNameForInlog() + "'"
+        String login = "UPDATE cd.customer SET pesetas =(pesetas +100) WHERE customerid=" + "'" + LoginController.getLoginController().getUserNameForInlog() + "'"
                 + " AND password= " + "'" + LoginController.getLoginController().getPasswordForInlog() + "'";
         loggedin.executeUpdate(login);
         loggedin.close();
@@ -71,7 +53,7 @@ public class InloggedCus {
 
     public void buy200Pesetas() throws SQLException {
         loggedin = LoginController.getLoginController().getLoginConnection().createStatement();
-        String login ="UPDATE cd.customer SET pesetas =(pesetas +200) WHERE customerid=" + "'" + LoginController.getLoginController().getUserNameForInlog() + "'"
+        String login = "UPDATE cd.customer SET pesetas =(pesetas +200) WHERE customerid=" + "'" + LoginController.getLoginController().getUserNameForInlog() + "'"
                 + " AND password= " + "'" + LoginController.getLoginController().getPasswordForInlog() + "'";
         loggedin.executeUpdate(login);
         loggedin.close();
@@ -83,36 +65,37 @@ public class InloggedCus {
     public void buy300Pesetas() throws SQLException {
 
         loggedin = LoginController.getLoginController().getLoginConnection().createStatement();
-        String login ="UPDATE cd.customer SET pesetas =(pesetas +300) WHERE customerid=" + "'" + LoginController.getLoginController().getUserNameForInlog() + "'"
+        String login = "UPDATE cd.customer SET pesetas =(pesetas +300) WHERE customerid=" + "'" + LoginController.getLoginController().getUserNameForInlog() + "'"
                 + " AND password= " + "'" + LoginController.getLoginController().getPasswordForInlog() + "'";
         loggedin.executeUpdate(login);
         loggedin.close();
-       // loginController.getLoginController().getLoginConnection().close();
+        // loginController.getLoginController().getLoginConnection().close();
         pesetasAmount.setText(String.valueOf(calculatePesetas()));
     }
+
     protected int calculatePesetas() throws SQLException {
 
         loggedin = LoginController.getLoginController().getLoginConnection().createStatement();
-        String login ="SELECT pesetas FROM cd.customer WHERE customerid=" + "'" + LoginController.getLoginController().getUserNameForInlog() + "'"
+        String login = "SELECT pesetas FROM cd.customer WHERE customerid=" + "'" + LoginController.getLoginController().getUserNameForInlog() + "'"
                 + " AND password= " + "'" + LoginController.getLoginController().getPasswordForInlog() + "'";
         ResultSet getPesetas = loggedin.executeQuery(login);
         while (getPesetas.next()) {
             test = getPesetas.getInt("pesetas");
         }
-       return test;
+        return test;
     }
 
     public void searchByDate(ActionEvent event) throws SQLException {
         textArea.clear();
-        loggedin= LoginController.getLoginController().getLoginConnection().createStatement();
+        loggedin = LoginController.getLoginController().getLoginConnection().createStatement();
 
-        String query=  ("SELECT artist, scene, cost, konsertid, konsertdate, city, country FROM cd.konsert JOIN cd.places ON konsert.scene=places.venue " +
-                "WHERE konsertdate BETWEEN '"+dateFrom.getText()+"' AND'"+dateTo.getText()
-                +"' ORDER BY konsertdate ASC"); //deklarerar SQL koden.
-        ResultSet resultSet=loggedin.executeQuery(query); //svar från db hamnar i resultset
+        String query = ("SELECT artist, scene, cost, konsertid, konsertdate, city, country FROM cd.konsert JOIN cd.places ON konsert.scene=places.venue " +
+                "WHERE konsertdate BETWEEN '" + dateFrom.getText() + "' AND'" + dateTo.getText()
+                + "' ORDER BY konsertdate ASC"); //deklarerar SQL koden.
+        ResultSet resultSet = loggedin.executeQuery(query); //svar från db hamnar i resultset
         System.out.println(query);
-        ArrayList<Object> searchByDateList= new ArrayList<>(); //stoppar in alla resultat från db i listan
-        while (resultSet.next()){
+        ArrayList<Object> searchByDateList = new ArrayList<>(); //stoppar in alla resultat från db i listan
+        while (resultSet.next()) {
             searchByDateList.add(resultSet.getString("artist"));
             searchByDateList.add(resultSet.getString("scene"));
             searchByDateList.add(resultSet.getString("konsertdate"));
@@ -120,8 +103,8 @@ public class InloggedCus {
             searchByDateList.add(resultSet.getString("country"));
             searchByDateList.add(resultSet.getString("city"));
         }
-        for (int i = 0; i <searchByDateList.size() ; i++) {
-            if (i % 6 == 0){
+        for (int i = 0; i < searchByDateList.size(); i++) {
+            if (i % 6 == 0) {
                 textArea.setText(textArea.getText() + "\n");
             }
             textArea.setText(textArea.getText() + searchByDateList.get(i) + "  "); //Adderar radbyte mellan raderna och space mellan columnerna i raden
@@ -134,7 +117,7 @@ public class InloggedCus {
         String query = ("SELECT artist, scene, konsertdate, city, country, konsertid FROM cd.konsert" +
                 "        JOIN cd.places ON konsert.scene = places.venue " +
                 "WHERE to_tsvector(artist || ' ' || scene || ' ' || konsertdate || ' ' || city || ' ' || country || ' ' || konsertid)" +
-                "@@ to_tsquery('" + searcTextField.getText() + ",')");
+                "@@ to_tsquery(QUOTE_LITERAL('" + searcTextField.getText() + "'))");
         ArrayList<Object> searchResultList = new ArrayList<>();
         ResultSet resultSet = loggedin.executeQuery(query);
         while (resultSet.next()) {
@@ -149,7 +132,7 @@ public class InloggedCus {
             if (i % 6 == 0) {
                 textArea.setText(textArea.getText() + "\n");
             }
-            textArea.setText(textArea.getText() + searchResultList.get(i)+"  ");
+            textArea.setText(textArea.getText() + searchResultList.get(i) + "  ");
         }
     }
 
@@ -183,11 +166,12 @@ public class InloggedCus {
     }
 
     public static InloggedCus getCurrentCustomer() {
-        if (currentCustomer==null) {
+        if (currentCustomer == null) {
             currentCustomer = new InloggedCus();
         }
         return currentCustomer;
     }
+
     public String getKonsertID() {
         return konsertID;
     }
