@@ -89,7 +89,7 @@ public class InloggedCus {
         textArea.clear();
         loggedin = LoginController.getLoginController().getLoginConnection().createStatement();
 
-        String query = ("SELECT artist, scene, cost, konsertid, konsertdate, city, country FROM cd.konsert JOIN cd.places ON konsert.scene=places.venue " +
+        String query = ("SELECT * FROM cd.v_search " +
                 "WHERE konsertdate BETWEEN '" + dateFrom.getText() + "' AND'" + dateTo.getText()
                 + "' ORDER BY konsertdate ASC"); //deklarerar SQL koden.
         ResultSet resultSet = loggedin.executeQuery(query); //svar från db hamnar i resultset
@@ -114,10 +114,12 @@ public class InloggedCus {
     public void search() throws SQLException { //TODO set WEIGHT on date ASC
         textArea.clear();
         loggedin = LoginController.getLoginController().getLoginConnection().createStatement();
-        String query = ("SELECT artist, scene, konsertdate, city, country, konsertid FROM cd.konsert" +
-                "        JOIN cd.places ON konsert.scene = places.venue " +
-                "WHERE to_tsvector(artist || ' ' || scene || ' ' || konsertdate || ' ' || city || ' ' || country || ' ' || konsertid)" +
-                "@@ to_tsquery(QUOTE_LITERAL('" + searcTextField.getText() + "'))");
+        String query = ("SELECT * FROM cd.v_search " +
+                "WHERE konsertdate >= CURRENT_DATE::varchar " +
+                "AND to_tsvector" +
+                "(artist || ' ' || scene || ' ' || konsertdate || ' ' || city || ' ' || country || ' ' || konsertid)"
+                +"@@ to_tsquery(QUOTE_LITERAL('" + searcTextField.getText() + "')) order by konsertdate ASC");
+        System.out.println(query);
         ArrayList<Object> searchResultList = new ArrayList<>();
         ResultSet resultSet = loggedin.executeQuery(query);
         while (resultSet.next()) {
@@ -148,14 +150,14 @@ public class InloggedCus {
         loggedin = LoginController.getLoginController().getLoginConnection().createStatement();
         String query = ("SELECT * FROM cd.konsert");
         ArrayList<Object> result = new ArrayList<>();
-        ResultSet getConsertList = loggedin.executeQuery(query);
+        ResultSet getConcertList = loggedin.executeQuery(query);
 
-        while (getConsertList.next()) {
-            result.add(getConsertList.getString("artist"));
-            result.add(getConsertList.getString("scene"));
-            result.add(getConsertList.getString("cost"));
-            result.add(getConsertList.getString("konsertdate"));
-            result.add(getConsertList.getString("konsertid"));
+        while (getConcertList.next()) {
+            result.add(getConcertList.getString("artist"));
+            result.add(getConcertList.getString("scene"));
+            result.add(getConcertList.getString("cost"));
+            result.add(getConcertList.getString("konsertdate"));
+            result.add(getConcertList.getString("konsertid"));
         }
         for (int i = 0; i < result.size(); i++) {
             if (i % 5 == 0) {

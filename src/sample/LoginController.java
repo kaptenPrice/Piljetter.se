@@ -62,13 +62,14 @@ public class LoginController {
         appStage.setScene(homePageScene);
         appStage.show();
     }
+//Checks the users username and password
     private boolean isValidCredentials() {
         boolean letIn = false;
         try {
             loginConnection = DriverManager.getConnection(data.getDATABASECONNECTION(),data.getDATABASEINLOGG(),data.getDATABASEPASSWORD());
             System.out.println("Opened db successfully");
             loginstatment = loginConnection.createStatement();
-            String login ="SELECT * FROM cd.customer WHERE customerid=" + "'" + userNameBox.getText() + "'"
+            String login ="SELECT customerid,password FROM cd.customer WHERE customerid=" + "'" + userNameBox.getText() + "'"
                     + " AND password= " + "'" + passWordBox.getText() + "'";
             ResultSet loginresualt = loginstatment.executeQuery(login);
             while (loginresualt.next()) {

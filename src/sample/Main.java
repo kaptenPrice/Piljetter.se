@@ -14,7 +14,7 @@ public class Main extends Application {
 
         Parent root = FXMLLoader.load(getClass().getResource("LoginScreen.fxml"));
 
-        primaryStage.setTitle("Hello World");
+        primaryStage.setTitle("Biljetter till konserter och evenemang");
         primaryStage.setScene(new Scene(root, 500, 400));
         primaryStage.show();
     }

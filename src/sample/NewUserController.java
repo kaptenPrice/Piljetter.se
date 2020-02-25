@@ -41,16 +41,19 @@ public class NewUserController {
     }
 
     private boolean isNewUserUnique() throws SQLException {
+        Connection connection = DriverManager.getConnection(dbUtil.getDATABASECONNECTION(), dbUtil.getDATABASEINLOGG(), dbUtil.getDATABASEPASSWORD());
+
         try {
-            Connection connection = DriverManager.getConnection(dbUtil.getDATABASECONNECTION(), dbUtil.getDATABASEINLOGG(), dbUtil.getDATABASEPASSWORD());
             PreparedStatement st = connection.prepareStatement("INSERT INTO cd.customer (customerid,password,pesetas)" + "VALUES (?, ?,100)");
             st.setString(1, newUserNameBox.getText());
             st.setString(2, newPasswordBox.getText());
             return st.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();
+            connection.close();
             return false;
         }
+
 
     }
 }

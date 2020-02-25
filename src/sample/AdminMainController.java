@@ -2,9 +2,17 @@ package sample;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 import org.postgresql.util.PSQLException;
+
+import java.io.IOException;
 import java.sql.*;
+
 import static java.lang.Integer.*;
 import static java.lang.Integer.parseInt;
 
@@ -14,29 +22,69 @@ public class AdminMainController {
     private PreparedStatement preparedStatement;
     @FXML
     private TextField venueValue, cityValue, countryCodeValue, renommeValue,
-            amountValue, artistName, artistPop, artistNameValue,sceneValue, costValue, concertDateValue, concertIdValue, concertValues, placesValues, cancelConcertValue;
+            amountValue, artistName, artistPop, invalidVenue, invalidArtist, invalidConcert, cancelConcertValue;
     private String insertIntoPlaces = "INSERT INTO cd.places (venue,city,country,renomme,amountoftickets)";
     private String insertArtist = "INSERT INTO cd.artists(name,popularity)";
-    private String insertConcert = "INSERT INTO cd.konsert(artist,scene,cost,konsertdate,konsertid)";
 
-    @FXML
-    public void makeConcert() throws SQLException {
+    public void createVenue(ActionEvent event) throws SQLException {
         connection = DriverManager.getConnection(dbUtil.getDATABASECONNECTION(), dbUtil.getDATABASEINLOGG(), dbUtil.getDATABASEPASSWORD());
-        preparedStatement = connection.prepareStatement(insertIntoPlaces + "VALUES(?,?,?,?,?);"
-                + insertArtist + "VALUES(?,?);"
-                + insertConcert +"VALUES(?,?,?,?,?)");
+        preparedStatement = connection.prepareStatement(insertIntoPlaces + "VALUES(?,?,?,?,?)");
         preparedStatement.setString(1, venueValue.getText());
         preparedStatement.setString(2, cityValue.getText());
         preparedStatement.setString(3, countryCodeValue.getText());
         preparedStatement.setInt(4, parseInt(renommeValue.getText()));
         preparedStatement.setInt(5, parseInt(amountValue.getText()));
-        preparedStatement.setString(6, artistName.getText());
-        preparedStatement.setInt(7, parseInt(artistPop.getText()));
-        preparedStatement.setString(8,artistNameValue.getText());
-        preparedStatement.setString(9,sceneValue.getText());
-        preparedStatement.setInt(10, parseInt(costValue.getText()));
-        preparedStatement.setString(11,concertDateValue.getText());
-        preparedStatement.setString(12,concertIdValue.getText());
+        try {
+            preparedStatement.executeQuery();
+
+        } catch (PSQLException e) {
+            System.out.println(e);
+        } catch (NumberFormatException nFe) {
+            System.out.println(nFe);
+        } catch (NullPointerException nE) {
+            System.out.println(nE);
+        }
+        connection.close();
+    }
+
+    public void createArtist(ActionEvent event) throws SQLException {
+        connection = DriverManager.getConnection(dbUtil.getDATABASECONNECTION(), dbUtil.getDATABASEINLOGG(), dbUtil.getDATABASEPASSWORD());
+        preparedStatement = connection.prepareStatement(insertArtist + "VALUES(?,?);");
+        preparedStatement.setString(1, artistName.getText());
+        preparedStatement.setInt(2, parseInt(artistPop.getText()));
+        System.out.println(preparedStatement);
+        try {
+            preparedStatement.executeQuery();
+
+        } catch (PSQLException e) {
+            invalidArtist.setText(e.toString());
+            System.out.println(e);
+        } catch (NumberFormatException | NullPointerException nFe) {
+            System.out.println(nFe);
+        }
+        connection.close();
+    }
+
+    @FXML
+    public void makeConcert(ActionEvent event) throws SQLException, IOException {
+        Parent createConcertRoot = FXMLLoader.load(getClass().getResource("createConcert.fxml"));
+        Stage concert = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        concert.hide();
+        concert.setScene(new Scene(createConcertRoot));
+
+
+        concert.show();
+    }
+
+    //Create concert, inserts values to cd.konsert DB kod
+       /* connection = DriverManager.getConnection(dbUtil.getDATABASECONNECTION(), dbUtil.getDATABASEINLOGG(), dbUtil.getDATABASEPASSWORD());
+        preparedStatement = connection.prepareStatement(
+                insertConcert + "VALUES(?,?,?,?,?)");
+        preparedStatement.setString(1, artistNameValue.getText());
+        preparedStatement.setString(2, sceneValue.getText());
+        preparedStatement.setInt(3, parseInt(costValue.getText()));
+        preparedStatement.setString(4, concertDateValue.getText());
+        preparedStatement.setString(5, concertIdValue.getText());
 
         System.out.println(preparedStatement);
         try {
@@ -46,24 +94,17 @@ public class AdminMainController {
             System.out.println(e);
         } catch (NumberFormatException nFe) {
             System.out.println(nFe);
-        }catch (NullPointerException nE){
+        } catch (NullPointerException nE) {
             System.out.println(nE);
         }
-
-
         System.out.println("create Statement");
-
-
         connection.close();
     }
-
+*/
     @FXML
     void cancelConcert(ActionEvent event) {
 
     }
-
-
-
     /*
      * Select and analyse methods*/
 
@@ -82,5 +123,6 @@ public class AdminMainController {
     void profitability(ActionEvent event) {
 
     }
+
 
 }
