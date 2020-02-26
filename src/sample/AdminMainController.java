@@ -77,7 +77,30 @@ public class AdminMainController {
     }
 
     @FXML
-    void cancelConcert(ActionEvent event) {
+    void cancelConcert(ActionEvent event) throws SQLException {
+       try {
+           changeConsertStatus();
+           connection = DriverManager.getConnection(dbUtil.getDATABASECONNECTION(), dbUtil.getDATABASEINLOGG(), dbUtil.getDATABASEPASSWORD());
+           preparedStatement = connection.prepareStatement(
+                   "(SELECT customerid,bookings.ticketid FROM cd.bookings INNER JOIN cd.tickets ON bookings.ticketid = " +
+                           "tickets.ticketid AND tickets.konsert_id ='"+cancelConcertValue.getText()+"'" +
+                           " AND bookingstatus ='bought'" +
+                   "INNER JOIN cd.konsert ON konsertid ='"+cancelConcertValue.getText()+"' AND konsertstatus = 'unavailable')");
+           ResultSet newCoupon = preparedStatement.executeQuery();
+           while (newCoupon.next()){
+               excuteCouponUpdate(newCoupon.getString("customerid"));
+               updateBookingStatus(newCoupon.getString("ticketid"));
+           }
+           connection.close();
+           connection = DriverManager.getConnection(dbUtil.getDATABASECONNECTION(), dbUtil.getDATABASEINLOGG(), dbUtil.getDATABASEPASSWORD());
+           preparedStatement.close();
+           preparedStatement = connection.prepareStatement("SELECT cd.updatetickets('"+cancelConcertValue.getText()+"')");
+           preparedStatement.executeQuery();
+           connection.close();
+       }
+       catch (SQLException e) {
+           e.printStackTrace();
+       }
 
     }
     /*

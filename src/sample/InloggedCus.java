@@ -148,7 +148,7 @@ public class InloggedCus {
     private void uppdateConsert() throws SQLException {//TODO set WEIGHT on date ASC
         textArea.clear();
         loggedin = LoginController.getLoginController().getLoginConnection().createStatement();
-        String query = ("SELECT * FROM cd.konsert");
+        String query = ("SELECT * FROM cd.konsert WHERE konsertstatus ='available'");
         ArrayList<Object> result = new ArrayList<>();
         ResultSet getConcertList = loggedin.executeQuery(query);
 

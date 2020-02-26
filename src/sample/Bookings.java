@@ -35,6 +35,7 @@ public class Bookings {
         bookingstage.setTitle("MyBookings");
         initiazlizeButtons();
         bookingstage.setScene(new Scene(bookingpane,600,500));
+
         bookingstage.show();
     }
 
@@ -45,15 +46,16 @@ public class Bookings {
             ticketArea.clear();
             try {
                 loggedIn = LoginController.getLoginController().getLoginConnection().createStatement();
-                String recipt = "SELECT ticketid,boughttype FROM cd.bookings WHERE customerid ='"+ LoginController.getLoginController().getUserNameForInlog() +"'";
+                String recipt = "SELECT ticketid,boughttype,timebought FROM cd.bookings WHERE customerid ='"+ LoginController.getLoginController().getUserNameForInlog() +"'";
                 ArrayList <String> printRecipt = new ArrayList<>();
                 ResultSet getTickets = loggedIn.executeQuery(recipt);
                 while (getTickets.next()) {
                     printRecipt.add(getTickets.getString("ticketid"));
                     printRecipt.add(getTickets.getString("boughttype"));
+                    printRecipt.add(getTickets.getTimestamp("timebought").toString());
                 }
                 for (int i = 0; i < printRecipt.size(); i++) {
-                    if (i%2==0) {
+                    if (i%3==0) {
                         ticketArea.setText(ticketArea.getText()+ "\n");
                     }
                     ticketArea.setText(ticketArea.getText()+printRecipt.get(i) + " ");
@@ -82,9 +84,9 @@ public class Bookings {
             try {
                 if (getCouponsForLabel()>=1) {
                     loggedIn = LoginController.getLoginController().getLoginConnection().createStatement();
-                    String booking = "INSERT INTO cd.bookings (customerid,ticketid,boughttype)" +
+                    String booking = "INSERT INTO cd.bookings (customerid,ticketid,boughttype,bookingstatus)" +
                             "VALUES((SELECT customerid FROM cd.customer WHERE customerid =" + "'" + LoginController.getLoginController().getUserNameForInlog() + "'" + ")," +
-                            "(SELECT ticketid FROM cd.tickets WHERE ticketid = " + "'" + chooseTicket.getText() + "'" + "),'coupon')";
+                            "(SELECT ticketid FROM cd.tickets WHERE ticketid = " + "'" + chooseTicket.getText() + "'" + "),'coupon','bought')";
                     loggedIn.executeUpdate(booking);
                     loggedIn.close();
                     changeBoughtTicketStatus(chooseTicket.getText());
@@ -108,9 +110,9 @@ public class Bookings {
                 int pricecost = getTicketCost();
                 if (customerPesetas >= pricecost) {
                     loggedIn = LoginController.getLoginController().getLoginConnection().createStatement();
-                    String booking = "INSERT INTO cd.bookings (customerid,ticketid,boughttype)" +
+                    String booking = "INSERT INTO cd.bookings (customerid,ticketid,boughttype,bookingstatus)" +
                             "VALUES((SELECT customerid FROM cd.customer WHERE customerid =" + "'" + loginController.getLoginController().getUserNameForInlog() + "'" + ")," +
-                            "(SELECT ticketid FROM cd.tickets WHERE ticketid = " + "'" + chooseTicket.getText() + "'" + "),'pesetas')";
+                            "(SELECT ticketid FROM cd.tickets WHERE ticketid = " + "'" + chooseTicket.getText() + "'" + "),'pesetas', 'bought')";
                     loggedIn.executeUpdate(booking);
                     loggedIn.close();
                     changeBoughtTicketStatus(chooseTicket.getText());
@@ -176,24 +178,25 @@ public class Bookings {
          private int getCouponsForLabel() throws SQLException {
              int pesetas = 0;
              loggedIn = loginController.getLoginController().getLoginConnection().createStatement();
-             String coupons = "SELECT coupon FROM cd.customer WHERE customerid=" + "'" + loginController.getLoginController().getUserNameForInlog() + "'";
+             String coupons = "SELECT count(*) FROM cd.coupons WHERE customer_id=" + "'" + loginController.getLoginController().getUserNameForInlog() + "'" +
+                     "AND usable = 'available'";
              ResultSet getcoupons = loggedIn.executeQuery(coupons);
              while (getcoupons.next()) {
-                 pesetas = getcoupons.getInt("coupon");
+                 pesetas = getcoupons.getInt("count");
              }
              return pesetas;
          }
          private void getTicketsForTextArea() throws SQLException {
         ticketArea.clear();
              loggedIn = loginController.getLoginController().getLoginConnection().createStatement();
-             String tickets = "SELECT ticketid, artistname FROM cd.tickets INNER JOIN cd.konsert ON konsertid ="
-                     + "'" + inloggedCus.getCurrentCustomer().getKonsertID() + "'" + " AND ticketdate = konsertdate" +
-                     " AND boughtstatus ='1'";
+             String tickets = "SELECT ticketid, artist FROM cd.tickets INNER JOIN cd.konsert ON tickets.konsert_id ="
+                     + "'" + inloggedCus.getCurrentCustomer().getKonsertID() + "'" +
+                     " AND boughtstatus ='available'";
              ArrayList <String> ticketarray = new ArrayList<>();
              ResultSet getTickets = loggedIn.executeQuery(tickets);
              while (getTickets.next()) {
                  ticketarray.add(getTickets.getString("ticketid"));
-                 ticketarray.add(getTickets.getString("artistname"));
+                 ticketarray.add(getTickets.getString("artist"));
              }
              for (int i = 0; i < ticketarray.size(); i++) {
                  if (i%2==0) {
@@ -224,14 +227,16 @@ public class Bookings {
          }
          private void changeBoughtTicketStatus(String ticketid) throws SQLException {
              loggedIn = LoginController.getLoginController().getLoginConnection().createStatement();
-             String statusTicket = "UPDATE cd.tickets SET boughtstatus = 0 Where ticketid ='"+ticketid +"'";
+             String statusTicket = "UPDATE cd.tickets SET boughtstatus = 'bought' Where ticketid ='"+ticketid +"'";
              loggedIn.executeUpdate(statusTicket);
              loggedIn.close();
          }
          private void changeCouponAmountAfterBuy() throws SQLException {
              loggedIn = loginController.getLoginController().getLoginConnection().createStatement();
-             String statusTicket = "UPDATE cd.customer SET coupon = (coupon -1) Where customerid ='"+ loginController.getLoginController().getUserNameForInlog() +"'";
-             loggedIn.executeUpdate(statusTicket);
+             String status = "update cd.coupons SET usable ='used' WHERE expire_date = "+
+                     "(SELECT min(expire_date) FROM cd.coupons WHERE usable" +
+                     "= 'available' AND customer_id = '"+loginController.getLoginController().getUserNameForInlog() +"' ) ";
+             loggedIn.executeUpdate(status);
              loggedIn.close();
              couponLabel.setText("coupons: " + getCouponsForLabel());
 
