@@ -75,6 +75,43 @@ public class AdminMainController {
 
         concert.show();
     }
+    private void changeConsertStatus() throws SQLException {
+        try {
+            connection = DriverManager.getConnection(dbUtil.getDATABASECONNECTION(), dbUtil.getDATABASEINLOGG(), dbUtil.getDATABASEPASSWORD());
+            preparedStatement = connection.prepareStatement("UPDATE cd.konsert SET konsertstatus ='unavailable'" +
+                    "WHERE konsertid = '" +cancelConcertValue.getText()+"'");
+            preparedStatement.executeUpdate();
+            connection.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    private void excuteCouponUpdate(String customer) throws SQLException {
+
+        try {
+            connection = DriverManager.getConnection(dbUtil.getDATABASECONNECTION(), dbUtil.getDATABASEINLOGG(), dbUtil.getDATABASEPASSWORD());
+            preparedStatement = connection.prepareStatement("INSERT INTO cd.coupons (customer_id, expire_date)" +
+                    "VALUES ('" +customer+"', CURRENT_DATE +365)");
+            preparedStatement.executeUpdate();
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    private void updateBookingStatus(String ticketId) throws SQLException {
+        try {
+            connection = DriverManager.getConnection(dbUtil.getDATABASECONNECTION(), dbUtil.getDATABASEINLOGG(), dbUtil.getDATABASEPASSWORD());
+            preparedStatement = connection.prepareStatement("UPDATE cd.bookings SET bookingstatus ='unavailable'" +
+                    "WHERE ticketid = '"+ticketId+"'");
+            preparedStatement.executeUpdate();
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
 
     @FXML
     void cancelConcert(ActionEvent event) throws SQLException {
