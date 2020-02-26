@@ -175,6 +175,7 @@ public class Bookings {
              return pesetas;
          }
 
+         
          private int getCouponsForLabel() throws SQLException {
              int pesetas = 0;
              loggedIn = loginController.getLoginController().getLoginConnection().createStatement();
