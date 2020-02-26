@@ -140,8 +140,8 @@ public class InloggedCus {
 
     public void startBookings() throws SQLException {
         textArea.clear();
-        choosenConsertIdTextField.clear();
         pesetasAmount.setText(String.valueOf(calculatePesetas()));
+        choosenConsertIdTextField.clear();
         uppdateConsert();
     }
 
