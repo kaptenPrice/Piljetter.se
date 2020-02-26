@@ -116,6 +116,7 @@ public class AdminMainController {
        }
 
        private void excuteCouponUpdate(String customer) throws SQLException {
+
            try {
                connection = DriverManager.getConnection(dbUtil.getDATABASECONNECTION(), dbUtil.getDATABASEINLOGG(), dbUtil.getDATABASEPASSWORD());
                preparedStatement = connection.prepareStatement("INSERT INTO cd.coupons (customer_id, expire_date)" +
