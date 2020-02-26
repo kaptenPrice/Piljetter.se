@@ -22,18 +22,18 @@ public class LoginController {
     private static LoginController loginController;
 
     public static LoginController getLoginController() {
-     if (loginController==null){
-         loginController = new LoginController();
-     }
+        if (loginController == null) {
+            loginController = new LoginController();
+        }
         return loginController;
     }
-    String adminUserName="admin";
-    String adminPassword="admin";
+
+    String adminUserName = "admin";
+    String adminPassword = "admin";
     @FXML
-    private TextField userNameBox,passWordBox;
+    private TextField userNameBox, passWordBox;
     @FXML
     private Label invalidLabel;
-
 
 
     @FXML
@@ -42,34 +42,34 @@ public class LoginController {
         Parent homePageRoot = FXMLLoader.load(getClass().getResource("NewUser.fxml"));
         Scene homePageScene = new Scene(homePageRoot);
         Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-       if (!userNameBox.getText().isEmpty() && isValidCredentials()){
-           appStage.hide();
-           }
-
-       else {
-           userNameBox.clear();
-           passWordBox.clear();
-           invalidLabel.setText("Sorry, invalid credentials");
-       }
+        if (!userNameBox.getText().isEmpty() && isValidCredentials()) {
+            appStage.hide();
+        } else {
+            userNameBox.clear();
+            passWordBox.clear();
+            invalidLabel.setText("Sorry, invalid credentials");
+        }
     }
+
     @FXML
     public void handleNewUser(ActionEvent event) throws IOException {
         System.out.println("New user clicked");
         Parent homePageRoot = FXMLLoader.load(getClass().getResource("NewUser.fxml"));
         Scene homePageScene = new Scene(homePageRoot);
         Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        appStage. hide();
+        appStage.hide();
         appStage.setScene(homePageScene);
         appStage.show();
     }
-//Checks the users username and password
+
+    //Checks the users username and password
     private boolean isValidCredentials() {
         boolean letIn = false;
         try {
-            loginConnection = DriverManager.getConnection(data.getDATABASECONNECTION(),data.getDATABASEINLOGG(),data.getDATABASEPASSWORD());
+            loginConnection = DriverManager.getConnection(data.getDATABASECONNECTION(), data.getDATABASEINLOGG(), data.getDATABASEPASSWORD());
             System.out.println("Opened db successfully");
             loginstatment = loginConnection.createStatement();
-            String login ="SELECT customerid,password FROM cd.customer WHERE customerid=" + "'" + userNameBox.getText() + "'"
+            String login = "SELECT customerid,password FROM cd.customer WHERE customerid=" + "'" + userNameBox.getText() + "'"
                     + " AND password= " + "'" + passWordBox.getText() + "'";
             ResultSet loginresualt = loginstatment.executeQuery(login);
             while (loginresualt.next()) {
@@ -95,16 +95,16 @@ public class LoginController {
         inloggStage.setScene(new Scene(inloggcus));
         inloggStage.show();
     }
+
     public void loginAdmin(ActionEvent event) throws IOException {
-        Parent adminPageRoot=FXMLLoader.load(getClass().getResource("AdminPage.fxml"));
-        Stage adminStage=(Stage)((Node) event.getSource()).getScene().getWindow();
+        Parent adminPageRoot = FXMLLoader.load(getClass().getResource("AdminPage.fxml"));
+        Stage adminStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         adminStage.hide();
         adminStage.setScene(new Scene(adminPageRoot));
 
-        if (userNameBox.getText().equals(adminUserName) && passWordBox.getText().equals(adminPassword)){
+        if (userNameBox.getText().equals(adminUserName) && passWordBox.getText().equals(adminPassword)) {
             adminStage.show();
-        }
-        else {
+        } else {
             userNameBox.clear();
             passWordBox.clear();
             invalidLabel.setText("Try again");
@@ -123,7 +123,6 @@ public class LoginController {
     public Connection getLoginConnection() {
         return loginConnection;
     }
-
 
 
 }

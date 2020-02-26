@@ -118,7 +118,7 @@ public class InloggedCus {
                 "WHERE konsertdate >= CURRENT_DATE::varchar " +
                 "AND to_tsvector" +
                 "(artist || ' ' || scene || ' ' || konsertdate || ' ' || city || ' ' || country || ' ' || konsertid)"
-                +"@@ to_tsquery(QUOTE_LITERAL('" + searcTextField.getText() + "')) order by konsertdate ASC");
+                +"@@ to_tsquery('" + searcTextField.getText() + ":*') order by konsertdate ASC");
         System.out.println(query);
         ArrayList<Object> searchResultList = new ArrayList<>();
         ResultSet resultSet = loggedin.executeQuery(query);

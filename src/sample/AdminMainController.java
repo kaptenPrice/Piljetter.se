@@ -76,31 +76,6 @@ public class AdminMainController {
         concert.show();
     }
 
-    //Create concert, inserts values to cd.konsert DB kod
-       /* connection = DriverManager.getConnection(dbUtil.getDATABASECONNECTION(), dbUtil.getDATABASEINLOGG(), dbUtil.getDATABASEPASSWORD());
-        preparedStatement = connection.prepareStatement(
-                insertConcert + "VALUES(?,?,?,?,?)");
-        preparedStatement.setString(1, artistNameValue.getText());
-        preparedStatement.setString(2, sceneValue.getText());
-        preparedStatement.setInt(3, parseInt(costValue.getText()));
-        preparedStatement.setString(4, concertDateValue.getText());
-        preparedStatement.setString(5, concertIdValue.getText());
-
-        System.out.println(preparedStatement);
-        try {
-            preparedStatement.executeQuery();
-
-        } catch (PSQLException e) {
-            System.out.println(e);
-        } catch (NumberFormatException nFe) {
-            System.out.println(nFe);
-        } catch (NullPointerException nE) {
-            System.out.println(nE);
-        }
-        System.out.println("create Statement");
-        connection.close();
-    }
-*/
     @FXML
     void cancelConcert(ActionEvent event) {
 
