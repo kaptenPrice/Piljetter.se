@@ -237,7 +237,7 @@ public class Bookings {
          }
          private void changeCouponAmountAfterBuy() throws SQLException {
              loggedIn = loginController.getLoginController().getLoginConnection().createStatement();
-             String status = "update cd.coupons SET usable ='used' WHERE expire_date = "+
+             String status = " update cd.coupons SET usable ='used' WHERE expire_date = "+
                      "(SELECT min(expire_date) FROM cd.coupons WHERE usable" +
                      "= 'available' AND customer_id = '"+loginController.getLoginController().getUserNameForInlog() +"' ) ";
              loggedIn.executeUpdate(status);
