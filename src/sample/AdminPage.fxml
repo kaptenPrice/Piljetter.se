@@ -22,7 +22,7 @@
          </font></Label>
       <Label layoutX="398.0" layoutY="169.0" text="Profitability" />
       <Button fx:id="profitabilityButton" layoutX="539.0" layoutY="165.0" mnemonicParsing="false" onAction="#profitability" text="Create report" />
-      <TextField alignment="TOP_LEFT" layoutX="322.0" layoutY="215.0" prefHeight="355.0" prefWidth="305.0" promptText="Your report will appear here" />
+      <TextField fx:id="reportValue" alignment="TOP_LEFT" layoutX="322.0" layoutY="215.0" prefHeight="355.0" prefWidth="305.0" promptText="Your report will appear here" />
       <Label layoutX="16.0" layoutY="250.0" prefHeight="17.0" prefWidth="183.0" text="Artist/band, Popularity(integer)" />
       <TextField fx:id="venueValue" layoutX="14.0" layoutY="32.0" prefHeight="25.0" prefWidth="87.0" promptText="Ullevi" />
       <TextField fx:id="cityValue" layoutX="14.0" layoutY="65.0" prefHeight="25.0" prefWidth="87.0" promptText="Göteborg" />

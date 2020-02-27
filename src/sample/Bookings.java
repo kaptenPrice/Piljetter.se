@@ -54,13 +54,15 @@ public class Bookings {
                     printRecipt.add(getTickets.getString("boughttype"));
                     printRecipt.add(getTickets.getTimestamp("timebought").toString());
                 }
+                loggedIn.close();
+                ArrayList<String> printKonsertInfo = getInformationToRecipt();
                 for (int i = 0; i < printRecipt.size(); i++) {
                     if (i%3==0) {
                         ticketArea.setText(ticketArea.getText()+ "\n");
                     }
-                    ticketArea.setText(ticketArea.getText()+printRecipt.get(i) + " ");
+                    ticketArea.setText(ticketArea.getText()+printRecipt.get(i) + ", ");
+                    ticketArea.setText(ticketArea.getText()+printKonsertInfo.get(i) + ", ");
                 }
-                loggedIn.close();
 
             } catch (SQLException ex) {
                 ex.printStackTrace();
@@ -175,7 +177,7 @@ public class Bookings {
              return pesetas;
          }
 
-         
+
          private int getCouponsForLabel() throws SQLException {
              int pesetas = 0;
              loggedIn = loginController.getLoginController().getLoginConnection().createStatement();
@@ -242,6 +244,27 @@ public class Bookings {
              loggedIn.close();
              couponLabel.setText("coupons: " + getCouponsForLabel());
 
+         }
+         private ArrayList<String> getInformationToRecipt() throws SQLException {
+             ArrayList<String> reciptInfo = new ArrayList<>();
+
+             try {
+           loggedIn = loginController.getLoginController().getLoginConnection().createStatement();
+           String status = "SELECT artist, scene, price FROM cd.konsert INNER JOIN cd.tickets ON konsertid = konsert_id " +
+                   "INNER JOIN cd.bookings ON bookings.ticketid =tickets.ticketid" +
+          " AND bookings.customerid = '"+loginController.getLoginController().getUserNameForInlog()+"'";
+           ResultSet reciptResult = loggedIn.executeQuery(status);
+           while (reciptResult.next()) {
+               reciptInfo.add(reciptResult.getString("artist"));
+               reciptInfo.add(reciptResult.getString("scene"));
+               reciptInfo.add(reciptResult.getString("price"));
+           }
+           loggedIn.close();
+       }
+       catch (SQLException e) {
+           e.printStackTrace();
+       }
+       return reciptInfo;
          }
 }
 
