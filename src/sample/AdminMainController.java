@@ -143,6 +143,24 @@ public class AdminMainController {
     /*
      * Select and analyse methods*/
     @FXML
+    void amountOfSoldTickets(ActionEvent event) throws SQLException {
+        String soldtickets = "SELECT count(tickets.ticketid), sum (price) FROM cd.tickets INNER JOIN cd.bookings " +
+                "on bookings.ticketid = tickets.ticketid AND boughttype ='pesetas' AND " +
+        "current_date between CURRENT_date AND (CURRENT_DATE -30) AND boughtstatus = 'bought'";
+        try {
+            connection = DriverManager.getConnection(dbUtil.getDATABASECONNECTION(), dbUtil.getDATABASEINLOGG(), dbUtil.getDATABASEPASSWORD());
+            preparedStatement = connection.prepareStatement(soldtickets);
+            ResultSet soldResult = preparedStatement.executeQuery();
+            reportValue.clear();
+            while (soldResult.next()){
+                reportValue.setText(reportValue.getText()+soldResult.getString("count") + " tickets sold last month ");
+                reportValue.setText(reportValue.getText()+soldResult.getString("sum") + " totalsum of pesetas earned");
+            }
+            connection.close();
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
     void amountOfSoldTickets(ActionEvent event) {
     }
     @FXML
