@@ -190,8 +190,9 @@ public class Bookings {
          private void getTicketsForTextArea() throws SQLException {
         ticketArea.clear();
              loggedIn = loginController.getLoginController().getLoginConnection().createStatement();
-             String tickets = "SELECT ticketid, artist FROM cd.tickets INNER JOIN cd.konsert ON tickets.konsert_id ="
-                     + "'" + inloggedCus.getCurrentCustomer().getKonsertID() + "'" +
+             String tickets = "SELECT ticketid, artist FROM cd.tickets INNER JOIN cd.konsert ON konsertid ="
+                     + "'" + inloggedCus.getCurrentCustomer().getKonsertID() + "' AND tickets.konsert_id = '"+
+                     inloggedCus.getCurrentCustomer().getKonsertID()+"' " +
                      " AND boughtstatus ='available'";
              ArrayList <String> ticketarray = new ArrayList<>();
              ResultSet getTickets = loggedIn.executeQuery(tickets);

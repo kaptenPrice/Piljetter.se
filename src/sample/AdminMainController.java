@@ -134,30 +134,23 @@ public class AdminMainController {
            preparedStatement = connection.prepareStatement("SELECT cd.updatetickets('"+cancelConcertValue.getText()+"')");
            preparedStatement.executeQuery();
            connection.close();
+           System.out.println("Lyckad transaktion");
        }
        catch (SQLException e) {
            e.printStackTrace();
        }
-
     }
     /*
      * Select and analyse methods*/
-
     @FXML
     void amountOfSoldTickets(ActionEvent event) {
-
     }
-
-
     @FXML
     void mostBookedArtists(ActionEvent event) {
-
     }
-
     @FXML
     void profitability(ActionEvent event) {
 
     }
-
 
 }

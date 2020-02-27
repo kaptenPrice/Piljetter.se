@@ -116,6 +116,7 @@ public class InloggedCus {
         loggedin = LoginController.getLoginController().getLoginConnection().createStatement();
         String query = ("SELECT * FROM cd.v_search " +
                 "WHERE konsertdate >= CURRENT_DATE::varchar " +
+                " AND konsertstatus='available' " +
                 "AND to_tsvector" +
                 "(artist || ' ' || scene || ' ' || konsertdate || ' ' || city || ' ' || country || ' ' || konsertid)"
                 +"@@ to_tsquery('" + searcTextField.getText() + ":*') order by konsertdate ASC");
