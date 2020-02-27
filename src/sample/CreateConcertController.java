@@ -6,12 +6,7 @@ import javafx.scene.control.TextField;
 import org.postgresql.util.PSQLException;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.net.URL;
-import java.sql.*;
-import java.util.ResourceBundle;
-
-import static java.lang.Integer.parseInt;
+import static java.sql.DriverManager.*;
 
 public class CreateConcertController {
     private int cost;
@@ -19,62 +14,57 @@ public class CreateConcertController {
     private Connection connection;
     private PreparedStatement preparedStatement;
     @FXML
-    private TextField artistNameValue, sceneValue,costValue, concertDateValue, concertIdValue;
+    private TextField artistNameValue, sceneValue, costValue, concertDateValue, concertIdValue;
     private String insertConcert = "INSERT INTO cd.konsert(artist,scene,cost,konsertdate,konsertid)";
     public TextArea concertListAdminView;
 
     @FXML
     private void createConcert() throws SQLException {
-        calculateConsertCost();
-        connection = DriverManager.getConnection(dbUtil.getDATABASECONNECTION(), dbUtil.getDATABASEINLOGG(), dbUtil.getDATABASEPASSWORD());
-        preparedStatement = connection.prepareStatement(
-                insertConcert + "VALUES(?,?,?,?,?)");
-        preparedStatement.setString(1, artistNameValue.getText());
-        preparedStatement.setString(2, sceneValue.getText());
-        preparedStatement.setInt(3, cost);
-        preparedStatement.setString(4, concertDateValue.getText());
-        preparedStatement.setString(5, concertIdValue.getText());
-
-        System.out.println(preparedStatement);
         try {
+            calculateConsertCost();
+            connection = getConnection(dbUtil.getDATABASECONNECTION(), dbUtil.getDATABASEINLOGG(), dbUtil.getDATABASEPASSWORD());
+            preparedStatement = connection.prepareStatement(
+                    insertConcert + "VALUES(?,?,?,?,?)");
+            preparedStatement.setString(1, artistNameValue.getText());
+            preparedStatement.setString(2, sceneValue.getText());
+            preparedStatement.setInt(3, cost);
+            preparedStatement.setString(4, concertDateValue.getText());
+            preparedStatement.setString(5, concertIdValue.getText());
             preparedStatement.executeQuery();
-            String query = ("SELECT * FROM cd.konsert WHERE konsertstatus ='available'");
-            ArrayList<Object> result = new ArrayList<>();
-            ResultSet getConcertList = preparedStatement.executeQuery(query);
-
-            while (getConcertList.next()) {
-                result.add(getConcertList.getString("artist"));
-                result.add(getConcertList.getString("scene"));
-                result.add(getConcertList.getString("cost"));
-                result.add(getConcertList.getString("konsertdate"));
-
-                result.add(getConcertList.getString("konsertid"));
-            }
-            for (int i = 0; i < result.size(); i++) {
-                if (i % 5 == 0) {
-                    concertListAdminView.setText(concertListAdminView.getText() + "\n");
-                }
-                concertListAdminView.setText(concertListAdminView.getText() + result.get(i) + " ");
-            }
-
+            connection.close();
 
         } catch (PSQLException | NumberFormatException | NullPointerException e) {
             System.out.println(e);
         }
         System.out.println("create Statement");
-        connection.close();
+
     }
 
+    @FXML
+    private void showLastCreatedConcert() throws SQLException {
+        concertListAdminView.clear();
+        connection = getConnection(dbUtil.getDATABASECONNECTION(), dbUtil.getDATABASEINLOGG(), dbUtil.getDATABASEPASSWORD());
+        String query = ("SELECT  artist,scene, timeadded " +
+                "FROM cd.konsert join cd.datelog on konsertid=datelogid " +
+                "where timeadded = (SELECT MAX(timeadded) FROM cd.datelog);");
+        System.out.println(query);
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery(query);
+        while (resultSet.next()) {
+            concertListAdminView.setText(resultSet.getString("artist") + "  " + resultSet.getString("scene") + " " + resultSet.getString("timeadded").substring(0, 19));
+        }
+        connection.close();
+    }
     private void calculateConsertCost() throws SQLException {
-        cost =0;
-        String konserCost = " SELECT cd.getkonsertcost((SELECT popularity FROM cd.artists WHERE name = '"+artistNameValue.getText()+
-                "'),(SELECT renomme FROM cd.places WHERE venue = '"+sceneValue.getText()+"'))";
+        cost = 0;
+        String konserCost = " SELECT cd.getkonsertcost((SELECT popularity FROM cd.artists WHERE name = '" + artistNameValue.getText() +
+                "'),(SELECT renomme FROM cd.places WHERE venue = '" + sceneValue.getText() + "'))";
         try {
-            connection = DriverManager.getConnection(dbUtil.getDATABASECONNECTION(), dbUtil.getDATABASEINLOGG(), dbUtil.getDATABASEPASSWORD());
+            connection = getConnection(dbUtil.getDATABASECONNECTION(), dbUtil.getDATABASEINLOGG(), dbUtil.getDATABASEPASSWORD());
             preparedStatement = connection.prepareStatement(konserCost);
             ResultSet consertCost = preparedStatement.executeQuery();
             while (consertCost.next()) {
-                cost =consertCost.getInt("getkonsertcost");
+                cost = consertCost.getInt("getkonsertcost");
             }
             connection.close();
         } catch (SQLException e) {
