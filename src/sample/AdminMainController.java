@@ -22,7 +22,7 @@ public class AdminMainController {
     private PreparedStatement preparedStatement;
     @FXML
     private TextField venueValue, cityValue, countryCodeValue, renommeValue,
-            amountValue, artistName, artistPop, invalidVenue, invalidArtist, invalidConcert, cancelConcertValue;
+            amountValue, artistName, artistPop, invalidVenue, invalidArtist, invalidConcert, cancelConcertValue, reportValue;
     private String insertIntoPlaces = "INSERT INTO cd.places (venue,city,country,renomme,amountoftickets)";
     private String insertArtist = "INSERT INTO cd.artists(name,popularity)";
 
@@ -183,9 +183,20 @@ public class AdminMainController {
     }
 
     @FXML
-    void profitability(ActionEvent event) {
-
+    void profitability(ActionEvent event) throws SQLException {
+       try {
+           connection = DriverManager.getConnection(dbUtil.getDATABASECONNECTION(), dbUtil.getDATABASEINLOGG(), dbUtil.getDATABASEPASSWORD());
+           preparedStatement = connection.prepareStatement( "SELECT cd.getprofitability('"+cancelConcertValue.getText()+"');");
+           ResultSet profitability = preparedStatement.executeQuery();
+           while (profitability.next()) {
+               reportValue.clear();
+               reportValue.setText("proitability on this Consert was: " + profitability.getString("getprofitability") + " pesetas");
+           }
+           connection.close();
+       }
+       catch (SQLException e) {
+           e.printStackTrace();
+       }
     }
-
 
 }
