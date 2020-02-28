@@ -1,14 +1,19 @@
 package sample;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import org.postgresql.util.PSQLException;
 
 import java.sql.*;
+
 import static java.sql.DriverManager.*;
 
 public class CreateConcertController {
+
+    public Button createConcertButton;
     private int cost;
     private DBUtil dbUtil = new DBUtil();
     private Connection connection;
@@ -16,7 +21,7 @@ public class CreateConcertController {
     @FXML
     private TextField artistNameValue, sceneValue, costValue, concertDateValue, concertIdValue;
     private String insertConcert = "INSERT INTO cd.konsert(artist,scene,cost,konsertdate,konsertid)";
-    public TextArea concertListAdminView;
+    public TextArea concertListAdminView, availableArtistsField, availableScenesField;
 
     @FXML
     private void createConcert() throws SQLException {
@@ -30,14 +35,15 @@ public class CreateConcertController {
             preparedStatement.setInt(3, cost);
             preparedStatement.setString(4, concertDateValue.getText());
             preparedStatement.setString(5, concertIdValue.getText());
-            preparedStatement.executeQuery();
+            preparedStatement.executeUpdate();
             connection.close();
-
+            System.out.println("Last consert");
+            showLastCreatedConcert();
         } catch (PSQLException | NumberFormatException | NullPointerException e) {
+            System.out.println("caught exception");
             System.out.println(e);
         }
         System.out.println("create Statement");
-
     }
 
     @FXML
@@ -55,6 +61,7 @@ public class CreateConcertController {
         }
         connection.close();
     }
+
     private void calculateConsertCost() throws SQLException {
         cost = 0;
         String konserCost = " SELECT cd.getkonsertcost((SELECT popularity FROM cd.artists WHERE name = '" + artistNameValue.getText() +
@@ -73,6 +80,11 @@ public class CreateConcertController {
     }
 
 
+    public void availableArtistsShow(ActionEvent event) {
+    }
+
+    public void availableScenes(ActionEvent event) {
+    }
 }
 
 

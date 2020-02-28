@@ -5,22 +5,14 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.CreateConcertController">
-   <children>
-      <TextField fx:id="artistNameValue" alignment="TOP_LEFT" layoutX="25.0" layoutY="141.0" prefHeight="25.0" prefWidth="120.0" promptText="Artist/band name" />
-      <Label layoutX="26.0" layoutY="106.0" prefHeight="17.0" prefWidth="291.0" text="Artist, scene Cost(int),concertdate, concertID" />
-      <TextField fx:id="concertDateValue" alignment="TOP_LEFT" layoutX="26.0" layoutY="213.0" prefHeight="25.0" prefWidth="120.0" promptText="2020-01-01" />
-      <TextField fx:id="concertIdValue" alignment="TOP_LEFT" layoutX="26.0" layoutY="248.0" prefHeight="25.0" prefWidth="120.0" promptText="ABCDEFFGHT" />
-      <TextField fx:id="sceneValue" alignment="TOP_LEFT" layoutX="26.0" layoutY="176.0" prefHeight="25.0" prefWidth="120.0" promptText="Ullevi" />
-      <Button fx:id="createConcertButton" layoutX="34.0" layoutY="286.0" mnemonicParsing="false" onAction="#createConcert" text="Create concert" />
-      <TextArea fx:id="concertListAdminView" layoutX="300.0" layoutY="113.0" prefHeight="235.0" prefWidth="262.0" />
-      <Label layoutX="385.0" layoutY="72.0" text="Concerts">
-         <font>
-            <Font size="23.0" />
-         </font>
-      </Label>
-      <Button fx:id="showLast" layoutX="510.0" layoutY="348.0" mnemonicParsing="false" onAction="#showLastCreatedConcert" text="Button" />
-   </children>
+   <TextField fx:id="artistNameValue" alignment="TOP_LEFT" layoutX="25.0" layoutY="49.0" prefHeight="25.0" prefWidth="120.0" promptText="Artist/band name" />
+   <Label layoutX="26.0" layoutY="14.0" prefHeight="17.0" prefWidth="291.0" text="Artist, scene Cost(int),concertdate, concertID" />
+   <TextField fx:id="concertDateValue" alignment="TOP_LEFT" layoutX="26.0" layoutY="121.0" prefHeight="25.0" prefWidth="120.0" promptText="2020-01-01" />
+   <TextField fx:id="concertIdValue" alignment="TOP_LEFT" layoutX="26.0" layoutY="156.0" prefHeight="25.0" prefWidth="120.0" promptText="ABCDEFFGHT" />
+   <TextField fx:id="sceneValue" alignment="TOP_LEFT" layoutX="26.0" layoutY="84.0" prefHeight="25.0" prefWidth="120.0" promptText="Ullevi" />
+   <Button fx:id="createConcertButton" layoutX="52.0" layoutY="187.0" mnemonicParsing="false" onAction="#createConcert" text="Create concert" />
+   <TextArea fx:id="concertListAdminView" layoutX="336.0" layoutY="43.0" prefHeight="37.0" prefWidth="228.0" />
+   <Label layoutX="172.0" layoutY="53.0" text="Use lowercase" />
 </AnchorPane>

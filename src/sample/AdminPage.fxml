@@ -9,9 +9,9 @@
 <AnchorPane prefHeight="652.0" prefWidth="642.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.AdminMainController">
    <children>
       <TextField fx:id="artistName" layoutX="15.0" layoutY="272.0" prefHeight="25.0" prefWidth="183.0" promptText="Artist or th band name" />
-      <Button fx:id="bookConcertButton" layoutX="17.0" layoutY="386.0" mnemonicParsing="false" onAction="#makeConcert" text="Create concert" />
+      <Button fx:id="bookConcertButton" layoutX="17.0" layoutY="386.0" mnemonicParsing="false" onAction="#makeConcert" prefHeight="30.0" prefWidth="93.0" text="Create concert" textFill="#f03407" />
       <Button fx:id="cancelConcertButton" layoutX="217.0" layoutY="594.0" mnemonicParsing="false" onAction="#cancelConcert" text="Cancel consert" />
-      <TextField fx:id="cancelConcertValue" layoutX="16.0" layoutY="594.0" prefHeight="25.0" prefWidth="194.0" promptText="Cancel concert" />
+      <TextField fx:id="cancelConcertValue" layoutX="16.0" layoutY="594.0" prefHeight="25.0" prefWidth="194.0" promptText="konsertId" />
       <Button fx:id="amountOfSoldticketsButton" layoutX="539.0" layoutY="126.0" mnemonicParsing="false" onAction="#amountOfSoldTickets" text="Create report" />
       <Button fx:id="mostBookedArtistsButton" layoutX="539.0" layoutY="86.0" mnemonicParsing="false" onAction="#mostBookedArtists" text="Create report" />
       <Label layoutX="398.0" layoutY="90.0" text="Most booked artists " />
@@ -33,6 +33,9 @@
       <TextField fx:id="artistPop" layoutX="16.0" layoutY="302.0" prefHeight="25.0" prefWidth="183.0" promptText="popularity" />
       <Button fx:id="createVenueButton" layoutX="14.0" layoutY="190.0" mnemonicParsing="false" onAction="#createVenue" text="Create venue" />
       <Button fx:id="createArtistButton" layoutX="17.0" layoutY="333.0" mnemonicParsing="false" onAction="#createArtist" text="Create artist" />
+      <Label layoutX="113.0" layoutY="36.0" prefHeight="17.0" prefWidth="81.0" text="Use lowercase " />
+      <Label layoutX="210.0" layoutY="276.0" prefHeight="17.0" prefWidth="81.0" text="Use lowercase " />
+      <Label layoutX="16.0" layoutY="570.0" text="Insert konsert id to cancel concert" />
 
    </children>
 </AnchorPane>

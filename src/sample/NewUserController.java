@@ -18,14 +18,13 @@ public class NewUserController {
     private DBUtil dbUtil = new DBUtil();
 
     @FXML
-    private TextField newUserNameBox,newPasswordBox;
+    private TextField newUserNameBox, newPasswordBox;
 
     @FXML
     private Label busyCredentials;
 
     @FXML
     public void createNewAccount(ActionEvent event) throws IOException, SQLException {
-        System.out.println("CreateNewAccount klickad ");
         Parent homePageRoot = FXMLLoader.load(getClass().getResource("LoginScreen.fxml"));
         Scene homePageScene = new Scene(homePageRoot);
         Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -41,7 +40,7 @@ public class NewUserController {
     }
 
     private boolean isNewUserUnique() throws SQLException {
-        Connection connection = DriverManager.getConnection(dbUtil.getDATABASECONNECTION(), dbUtil.getDATABASEINLOGG(), dbUtil.getDATABASEPASSWORD());
+        Connection connection = DriverManager.getConnection(dbUtil.getDATABASECONNECTION(), DBUtil.getDATABASEINLOGGCUSTOMER(), DBUtil.getDATABASEPASSWORDCUSTOMER());
 
         try {
             PreparedStatement st = connection.prepareStatement("INSERT INTO cd.customer (customerid,password,pesetas)" + "VALUES (?, ?,100)");

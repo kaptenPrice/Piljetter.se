@@ -167,9 +167,9 @@ public class Bookings {
     }
          private int getPesetasForLabel() throws SQLException {
              int pesetas = 0;
-             loggedIn = loginController.getLoginController().getLoginConnection().createStatement();
-             String login = "SELECT pesetas FROM cd.customer WHERE customerid=" + "'" + loginController.getLoginController().getUserNameForInlog() + "'"
-                     + " AND password= " + "'" + loginController.getLoginController().getPasswordForInlog() + "'";
+             loggedIn = LoginController.getLoginController().getLoginConnection().createStatement();
+             String login = "SELECT pesetas FROM cd.customer WHERE customerid=" + "'" + LoginController.getLoginController().getUserNameForInlog() + "'"
+                     + " AND password= " + "'" + LoginController.getLoginController().getPasswordForInlog() + "'";
              ResultSet getPesetas = loggedIn.executeQuery(login);
              while (getPesetas.next()) {
                  pesetas = getPesetas.getInt("pesetas");
@@ -180,8 +180,8 @@ public class Bookings {
 
          private int getCouponsForLabel() throws SQLException {
              int pesetas = 0;
-             loggedIn = loginController.getLoginController().getLoginConnection().createStatement();
-             String coupons = "SELECT count(*) FROM cd.coupons WHERE customer_id=" + "'" + loginController.getLoginController().getUserNameForInlog() + "'" +
+             loggedIn = LoginController.getLoginController().getLoginConnection().createStatement();
+             String coupons = "SELECT count(*) FROM cd.coupons WHERE customer_id=" + "'" + LoginController.getLoginController().getUserNameForInlog() + "'" +
                      "AND usable = 'available'";
              ResultSet getcoupons = loggedIn.executeQuery(coupons);
              while (getcoupons.next()) {
@@ -191,10 +191,10 @@ public class Bookings {
          }
          private void getTicketsForTextArea() throws SQLException {
         ticketArea.clear();
-             loggedIn = loginController.getLoginController().getLoginConnection().createStatement();
+             loggedIn = LoginController.getLoginController().getLoginConnection().createStatement();
              String tickets = "SELECT ticketid, artist FROM cd.tickets INNER JOIN cd.konsert ON konsertid ="
-                     + "'" + inloggedCus.getCurrentCustomer().getKonsertID() + "' AND tickets.konsert_id = '"+
-                     inloggedCus.getCurrentCustomer().getKonsertID()+"' " +
+                     + "'" + InloggedCus.getCurrentCustomer().getKonsertID() + "' AND tickets.konsert_id = '"+
+                     InloggedCus.getCurrentCustomer().getKonsertID()+"' " +
                      " AND boughtstatus ='available'";
              ArrayList <String> ticketarray = new ArrayList<>();
              ResultSet getTickets = loggedIn.executeQuery(tickets);
@@ -213,7 +213,7 @@ public class Bookings {
          }
 
          private int getTicketCost() throws SQLException {
-             loggedIn = loginController.getLoginController().getLoginConnection().createStatement();
+             loggedIn = LoginController.getLoginController().getLoginConnection().createStatement();
              String ticketprice = "SELECT price FROM cd.tickets WHERE ticketid = " + "'" +  chooseTicket.getText() + "'" +"";
              ResultSet priceResult = loggedIn.executeQuery(ticketprice);
              int priceString =0;
@@ -223,7 +223,7 @@ public class Bookings {
              return priceString;
          }
          private void updatePesetas(int currentPesetas,int costPesetas) throws SQLException {
-             loggedIn = loginController.getLoginController().getLoginConnection().createStatement();
+             loggedIn = LoginController.getLoginController().getLoginConnection().createStatement();
              String newPesetas = "UPDATE cd.customer SET pesetas = "+currentPesetas +"-" +costPesetas+ "WHERE customerid ="+"'" + loginController.getLoginController().getUserNameForInlog() + "'";
              loggedIn.executeUpdate(String.format(newPesetas));
              loggedIn.close();
@@ -236,10 +236,10 @@ public class Bookings {
              loggedIn.close();
          }
          private void changeCouponAmountAfterBuy() throws SQLException {
-             loggedIn = loginController.getLoginController().getLoginConnection().createStatement();
+             loggedIn = LoginController.getLoginController().getLoginConnection().createStatement();
              String status = " update cd.coupons SET usable ='used' WHERE expire_date = "+
                      "(SELECT min(expire_date) FROM cd.coupons WHERE usable" +
-                     "= 'available' AND customer_id = '"+loginController.getLoginController().getUserNameForInlog() +"' ) ";
+                     "= 'available' AND customer_id = '"+ LoginController.getLoginController().getUserNameForInlog() +"' ) ";
              loggedIn.executeUpdate(status);
              loggedIn.close();
              couponLabel.setText("coupons: " + getCouponsForLabel());
@@ -249,10 +249,10 @@ public class Bookings {
              ArrayList<String> reciptInfo = new ArrayList<>();
 
              try {
-           loggedIn = loginController.getLoginController().getLoginConnection().createStatement();
+           loggedIn = LoginController.getLoginController().getLoginConnection().createStatement();
            String status = "SELECT artist, scene, price FROM cd.konsert INNER JOIN cd.tickets ON konsertid = konsert_id " +
                    "INNER JOIN cd.bookings ON bookings.ticketid =tickets.ticketid" +
-          " AND bookings.customerid = '"+loginController.getLoginController().getUserNameForInlog()+"'";
+          " AND bookings.customerid = '"+ LoginController.getLoginController().getUserNameForInlog()+"'";
            ResultSet reciptResult = loggedIn.executeQuery(status);
            while (reciptResult.next()) {
                reciptInfo.add(reciptResult.getString("artist"));

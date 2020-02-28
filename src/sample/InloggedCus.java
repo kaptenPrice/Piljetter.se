@@ -111,7 +111,7 @@ public class InloggedCus {
         }
     }
 
-    public void search() throws SQLException { //TODO set WEIGHT on date ASC
+    public void search() throws SQLException {
         textArea.clear();
         loggedin = LoginController.getLoginController().getLoginConnection().createStatement();
         String query = ("SELECT * FROM cd.v_search " +

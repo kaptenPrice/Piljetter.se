@@ -11,7 +11,7 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.LoginController">
    <children>
-      <Text layoutX="47.0" layoutY="67.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Piljetter.se" textAlignment="CENTER" wrappingWidth="343.7525939941406">
+      <Text layoutX="78.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Piljetter.se" textAlignment="CENTER" wrappingWidth="343.7525939941406">
          <font>
             <Font size="45.0" />
          </font>
@@ -30,7 +30,7 @@
       <TextField fx:id="userNameBox" layoutX="190.0" layoutY="156.0" promptText="Username" />
       <TextField fx:id="passWordBox" layoutX="190.0" layoutY="209.0" promptText="password" />
       <Label fx:id="invalidLabel" layoutX="189.0" layoutY="243.0" prefHeight="17.0" prefWidth="149.0" textFill="RED" />
-      <Button id="newUserID" alignment="CENTER" contentDisplay="CENTER" layoutX="376.0" layoutY="354.0" mnemonicParsing="false" onAction="#handleNewUser" text="Register new user" />
+      <Button id="newUserID" alignment="CENTER" contentDisplay="CENTER" layoutX="85.0" layoutY="335.0" mnemonicParsing="false" onAction="#handleNewUser" prefHeight="35.0" prefWidth="350.0" text="Register new user" />
       <Button fx:id="adminLogginButton" layoutX="315.0" layoutY="283.0" mnemonicParsing="false" onAction="#loginAdmin" text="Admin">
          <font>
             <Font size="11.0" />

@@ -16,7 +16,7 @@ import javafx.stage.Stage;
 public class LoginController {
     private static String passwordForInlog;
     private static String userNameForInlog;
-    private DBUtil data = new DBUtil();
+    private DBUtil dbUtil = new DBUtil();
     private static Connection loginConnection;
     private Statement loginstatment;
     private static LoginController loginController;
@@ -38,7 +38,6 @@ public class LoginController {
 
     @FXML
     private void loginInButtonAction(ActionEvent event) throws IOException {
-        System.out.println("HandlebuttonAction klickad ");
         Parent homePageRoot = FXMLLoader.load(getClass().getResource("NewUser.fxml"));
         Scene homePageScene = new Scene(homePageRoot);
         Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -66,7 +65,7 @@ public class LoginController {
     private boolean isValidCredentials() {
         boolean letIn = false;
         try {
-            loginConnection = DriverManager.getConnection(data.getDATABASECONNECTION(), data.getDATABASEINLOGG(), data.getDATABASEPASSWORD());
+            loginConnection = DriverManager.getConnection(dbUtil.getDATABASECONNECTION(), dbUtil.getDATABASEINLOGGCUSTOMER(), dbUtil.getDATABASEPASSWORDCUSTOMER());
             System.out.println("Opened db successfully");
             loginstatment = loginConnection.createStatement();
             String login = "SELECT customerid,password FROM cd.customer WHERE customerid=" + "'" + userNameBox.getText() + "'"
